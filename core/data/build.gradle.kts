@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.data"
+    namespace = "com.wei.picquest.core.data"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
