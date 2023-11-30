@@ -1,16 +1,17 @@
+import com.wei.picquest.PqBuildType
+
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.pq.android.application)
+    alias(libs.plugins.pq.android.application.compose)
+    alias(libs.plugins.pq.android.application.flavors)
+    alias(libs.plugins.pq.android.hilt)
 }
 
 android {
     namespace = "com.wei.picquest"
-    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.wei.picquest"
-        minSdk = 21
-        targetSdk = 34
         /**
          * Version Code: AABCXYZ
          *
@@ -28,7 +29,9 @@ android {
          */
         versionName = "0.0.0"
 
+        // TODO Wei Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -44,21 +47,20 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    buildTypes {
+        debug {
+            applicationIdSuffix = PqBuildType.DEBUG.applicationIdSuffix
+        }
+        release {
+            isMinifyEnabled = true
+            applicationIdSuffix = PqBuildType.RELEASE.applicationIdSuffix
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+            // To publish on the Play store a private signing key is required, but to allow anyone
+            // who clones the code to sign and run the release variant, use the debug signing key.
+            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
 
     packaging {
@@ -66,7 +68,6 @@ android {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
-
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -75,22 +76,45 @@ android {
 }
 
 dependencies {
+    // TODO Wei
+//    implementation(project(":feature:login"))
+//    implementation(project(":feature:home"))
+//    implementation(project(":feature:contactme"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.1")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(project(":core:designsystem"))
+//    implementation(project(":core:common"))
+//    implementation(project(":core:data"))
+//    implementation(project(":core:model"))
+//    implementation(project(":core:datastore"))
+
+    androidTestImplementation(project(":core:designsystem"))
+//    androidTestImplementation(project(":core:datastore-test"))
+//    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.accompanist.testharness)
+//    testImplementation(project(":core:datastore-test"))
+//    testImplementation(project(":core:testing"))
+    testImplementation(libs.androidx.navigation.testing)
+    testImplementation(libs.accompanist.testharness)
+//    debugImplementation(project(":ui-test-hilt-manifest"))
+    debugImplementation(libs.androidx.compose.ui.testManifest)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+
+    // LifeCycle
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+
+    // Navigation
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Splashscreen
+    implementation(libs.androidx.core.splashscreen)
 
     // Timber
     implementation(libs.timber)

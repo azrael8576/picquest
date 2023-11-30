@@ -17,4 +17,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "PicQuest"
 include(":app")
- 
+
+include(":core:designsystem")
+include(":core:testing")
+
+include(":ui-test-hilt-manifest")
