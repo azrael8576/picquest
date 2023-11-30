@@ -1,10 +1,12 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -15,4 +17,13 @@ dependencyResolutionManagement {
 
 rootProject.name = "PicQuest"
 include(":app")
- 
+
+include(":core:designsystem")
+include(":core:testing")
+include(":core:common")
+include(":core:data")
+include(":core:domain")
+include(":core:model")
+include(":core:network")
+
+include(":ui-test-hilt-manifest")
