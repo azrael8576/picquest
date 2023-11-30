@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">PicQuest</string>
+    <string name="not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="photo_library">Photo Library</string>
+    <string name="home">Home</string>
+    <string name="contact_me">Contact Me</string>
+
+    <!-- Test tag -->
+    <string name="tag_pq_bottom_bar" translatable="false">PqBottomBar</string>
+    <string name="tag_pq_nav_rail" translatable="false">PqNavRail</string>
+    <string name="tag_pq_nav_drawer" translatable="false">PqNavDrawer</string>
 </resources>
