@@ -27,3 +27,5 @@ include(":core:model")
 include(":core:network")
 
 include(":ui-test-hilt-manifest")
+
+include(":feature:home")

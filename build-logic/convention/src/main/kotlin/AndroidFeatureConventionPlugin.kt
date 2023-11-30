@@ -18,7 +18,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 defaultConfig {
                     testInstrumentationRunner =
-                        "com.wei.picquest.core.testing.AtTestRunner"
+                        "com.wei.picquest.core.testing.PqTestRunner"
                 }
                 configureGradleManagedDevices(this)
             }

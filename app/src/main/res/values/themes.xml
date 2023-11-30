@@ -1,20 +1,20 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+    <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Allows us to override night specific attributes in the
-         values-night folder. -->
-    <style name="NightAdjusted.Theme.Pq" parent="android:Theme.Material.Light.NoActionBar" />
+        <!-- Allows us to override night specific attributes in the
+             values-night folder. -->
+        <style name="NightAdjusted.Theme.Pq" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <!-- The final theme we use -->
-    <style name="Theme.Pq" parent="NightAdjusted.Theme.Pq" />
+        <!-- The final theme we use -->
+        <style name="Theme.Pq" parent="NightAdjusted.Theme.Pq" />
 
-    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
-    </style>
+        <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+            <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+            <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        </style>
 
-    <style name="Theme.Pq.Splash" parent="NightAdjusted.Theme.Splash">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
-        <item name="postSplashScreenTheme">@style/Theme.Pq</item>
-    </style>
+        <style name="Theme.Pq.Splash" parent="NightAdjusted.Theme.Splash">
+            <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+            <item name="postSplashScreenTheme">@style/Theme.Pq</item>
+        </style>
 
-</resources>
+    </resources>

@@ -38,16 +38,6 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    buildTypes {
         debug {
             applicationIdSuffix = PqBuildType.DEBUG.applicationIdSuffix
         }
@@ -76,9 +66,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:home"))
+
     // TODO Wei
 //    implementation(project(":feature:login"))
-//    implementation(project(":feature:home"))
 //    implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))
