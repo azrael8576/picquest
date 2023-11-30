@@ -10,12 +10,11 @@ android {
 
 
 dependencies {
-    // TODO Wei
-//    implementation(project(":core:common"))
-//    implementation(project(":core:data"))
-//    implementation(project(":core:model"))
-//    implementation(project(":core:domain"))
-//    implementation(project(":core:network"))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:network"))
     implementation(project(":core:designsystem"))
 
     api(libs.junit4)

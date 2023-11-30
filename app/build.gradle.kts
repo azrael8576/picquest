@@ -29,8 +29,8 @@ android {
          */
         versionName = "0.0.0"
 
-        // TODO Wei Custom test runner to set up Hilt dependency graph
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Custom test runner to set up Hilt dependency graph
+        testInstrumentationRunner = "com.wei.picquest.core.testing.PqTestRunner"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -82,9 +82,9 @@ dependencies {
 //    implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))
-//    implementation(project(":core:common"))
-//    implementation(project(":core:data"))
-//    implementation(project(":core:model"))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
 //    implementation(project(":core:datastore"))
 
     androidTestImplementation(project(":core:designsystem"))

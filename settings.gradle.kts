@@ -20,5 +20,10 @@ include(":app")
 
 include(":core:designsystem")
 include(":core:testing")
+include(":core:common")
+include(":core:data")
+include(":core:domain")
+include(":core:model")
+include(":core:network")
 
 include(":ui-test-hilt-manifest")

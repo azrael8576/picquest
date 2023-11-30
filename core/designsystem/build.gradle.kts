@@ -8,7 +8,7 @@ android {
     namespace = "com.wei.picquest.core.designsystem"
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.wei.picquest.core.testing.PqTestRunner"
     }
 }
 
