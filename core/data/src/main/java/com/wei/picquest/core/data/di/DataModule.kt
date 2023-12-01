@@ -18,7 +18,6 @@ interface DataModule {
         searchImagesRepository: DefaultSearchImagesRepository,
     ): SearchImagesRepository
 
-
     @Binds
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
