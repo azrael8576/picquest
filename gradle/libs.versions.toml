@@ -39,6 +39,8 @@ secrets = "2.0.1"
 lint = "31.0.2"
 robolectric = "4.10.3"
 roborazzi = "1.5.0-alpha-2"
+paging = "3.2.1"
+pagingCompose = "3.3.0-alpha02"
 
 [libraries]
 
@@ -169,6 +171,11 @@ robolectric-shadows = { group = "org.robolectric", name = "shadows-framework", v
 
 # roborazzi - A Screenshot tests lib in jvm.
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+
+# paging 3
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

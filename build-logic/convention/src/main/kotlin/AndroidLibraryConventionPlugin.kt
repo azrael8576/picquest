@@ -36,6 +36,11 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("androidTestImplementation", kotlin("test"))
                 add("androidTestImplementation", project(":core:testing"))
 
+                // Paging 3
+                add("implementation", libs.findLibrary("paging-runtime").get())
+                add("implementation", libs.findLibrary("paging-compose").get())
+                add("testImplementation", libs.findLibrary("paging-common").get())
+
                 // Timber
                 add("implementation", libs.findLibrary("timber").get())
             }
