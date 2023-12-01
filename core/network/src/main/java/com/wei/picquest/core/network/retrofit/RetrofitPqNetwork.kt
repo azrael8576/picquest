@@ -23,7 +23,7 @@ interface RetrofitPixabayApi {
     /**
      * https://pixabay.com/api/?key=${api key}&q=yellow+flowers&image_type=photo
      */
-    @GET("")
+    @GET(".")
     suspend fun searchImages(
         @Query("key") apiKey: String = API_KEY,
         @Query("q") query: String,

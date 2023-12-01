@@ -40,10 +40,6 @@ data class NetworkImageDetail(
     val webformatHeight: Int,
     @SerialName("largeImageURL")
     val largeImageURL: String,
-    @SerialName("fullHDURL")
-    val fullHDURL: String,
-    @SerialName("imageURL")
-    val imageURL: String,
     @SerialName("imageWidth")
     val imageWidth: Int,
     @SerialName("imageHeight")
@@ -64,7 +60,4 @@ data class NetworkImageDetail(
     val user: String,
     @SerialName("userImageURL")
     val userImageURL: String,
-    // Add vectorURL if your account has full API access
-    // @SerialName("vectorURL")
-    // val vectorURL: String? = null
 )
