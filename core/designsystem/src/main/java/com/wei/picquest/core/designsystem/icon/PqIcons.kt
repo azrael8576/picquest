@@ -14,8 +14,10 @@ import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.ArrowForwardIos
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Phone
@@ -55,4 +57,6 @@ object PqIcons {
     val Person = Icons.Rounded.Person
     val Menu = Icons.Rounded.Menu
     val Add = Icons.Rounded.Add
+    val ListView = Icons.Rounded.List
+    val GridView = Icons.Rounded.GridView
 }

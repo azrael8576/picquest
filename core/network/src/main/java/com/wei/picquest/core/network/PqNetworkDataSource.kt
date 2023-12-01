@@ -7,5 +7,5 @@ import com.wei.picquest.core.network.model.NetworkSearchImages
  */
 interface PqNetworkDataSource {
 
-    suspend fun searchImages(query: String): NetworkSearchImages
+    suspend fun searchImages(query: String, page: Int, perPage: Int): NetworkSearchImages
 }

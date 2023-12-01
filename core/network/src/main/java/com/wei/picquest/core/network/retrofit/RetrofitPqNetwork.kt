@@ -28,6 +28,8 @@ interface RetrofitPixabayApi {
         @Query("key") apiKey: String = API_KEY,
         @Query("q") query: String,
         @Query("image_type") imageType: String = "photo",
+        @Query("page") page: Int,
+        @Query("perPage") perPage: Int,
         // Add more parameters as needed
     ): NetworkSearchImages
 }
@@ -50,7 +52,7 @@ class RetrofitPqNetwork @Inject constructor(
         .build()
         .create(RetrofitPixabayApi::class.java)
 
-    override suspend fun searchImages(query: String): NetworkSearchImages {
-        return pixabayApi.searchImages(query = query)
+    override suspend fun searchImages(query: String, page: Int, perPage: Int): NetworkSearchImages {
+        return pixabayApi.searchImages(query = query, page = page, perPage = perPage)
     }
 }
