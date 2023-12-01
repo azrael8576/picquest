@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.home.home
+package com.wei.picquest.feature.photolibrary.photolibrary
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -52,14 +52,14 @@ import com.wei.picquest.core.designsystem.theme.PqTheme
  *
  */
 @Composable
-internal fun HomeRoute(
+internal fun PhotoLibraryRoute(
     navController: NavController,
 ) {
-    HomeScreen()
+    PhotoLibraryScreen()
 }
 
 @Composable
-internal fun HomeScreen(
+internal fun PhotoLibraryScreen(
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
 ) {
@@ -87,7 +87,7 @@ internal fun HomeScreen(
             Column {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "Screen not available \uD83D\uDE48",
+                    text = "Photo Library Screen not available \uD83D\uDE48",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
@@ -107,6 +107,6 @@ internal fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     PqTheme {
-        HomeScreen()
+        PhotoLibraryScreen()
     }
 }
