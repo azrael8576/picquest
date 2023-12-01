@@ -13,7 +13,7 @@ data class NetworkSearchImages(
     @SerialName("totalHits")
     val totalHits: Int,
     @SerialName("hits")
-    val hits: List<NetworkImageDetail>
+    val hits: List<NetworkImageDetail>,
 )
 
 @Serializable
@@ -63,7 +63,7 @@ data class NetworkImageDetail(
     @SerialName("user")
     val user: String,
     @SerialName("userImageURL")
-    val userImageURL: String
+    val userImageURL: String,
     // Add vectorURL if your account has full API access
     // @SerialName("vectorURL")
     // val vectorURL: String? = null

@@ -8,9 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.io.PrintWriter
 import javax.inject.Inject
-
 
 /**
  * Implementation of the [SearchImagesRepository].
@@ -28,7 +26,7 @@ class DefaultSearchImagesRepository @Inject constructor(
      * @return 一個 Flow，內容為 Search Images 的數據。
      */
     override suspend fun getSearchImages(
-        query: String
+        query: String,
     ): Flow<NetworkSearchImages> = withContext(ioDispatcher) {
         flow {
             emit(network.searchImages(query))

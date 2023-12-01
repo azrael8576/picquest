@@ -5,7 +5,7 @@ import com.wei.picquest.core.network.model.NetworkSearchImages
 data class SearchImages(
     val total: Int,
     val totalHits: Int,
-    val images: List<ImageDetail>
+    val images: List<ImageDetail>,
 )
 
 data class ImageDetail(
@@ -31,7 +31,7 @@ data class ImageDetail(
     val comments: Int,
     val userId: Int,
     val user: String,
-    val userImageURL: String
+    val userImageURL: String,
 )
 
 fun NetworkSearchImages.asExternalModel() = SearchImages(
@@ -61,7 +61,7 @@ fun NetworkSearchImages.asExternalModel() = SearchImages(
             comments = networkImageDetail.comments,
             userId = networkImageDetail.userId,
             user = networkImageDetail.user,
-            userImageURL = networkImageDetail.userImageURL
+            userImageURL = networkImageDetail.userImageURL,
         )
-    }
+    },
 )
