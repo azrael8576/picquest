@@ -3,7 +3,6 @@ package com.wei.picquest.feature.photo.photosearch
 import com.wei.picquest.core.base.BaseViewModel
 import com.wei.picquest.feature.photo.photosearch.manager.RecentSearchManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +21,9 @@ class PhotoSearchViewModel @Inject constructor() : BaseViewModel<
     }
 
     private fun searchTriggered(query: String) {
-        recentSearchManager.addSearchQuery(query)
+        if (query.isNotBlank()) {
+            recentSearchManager.addSearchQuery(query)
+        }
         updateState {
             copy(
                 searchQuery = "",
@@ -38,7 +39,6 @@ class PhotoSearchViewModel @Inject constructor() : BaseViewModel<
                 recentSearchQueries = recentSearchManager.recentSearchQueries,
             )
         }
-        Timber.e("clearRecentSearchQueries " + recentSearchManager.recentSearchQueries.toString())
     }
 
     override fun dispatch(action: PhotoSearchViewAction) {

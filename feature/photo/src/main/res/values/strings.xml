@@ -8,4 +8,5 @@
     <string name="clear_search_text_content_desc">Clear search text</string>
     <string name="recent_searches">Recent searches</string>
     <string name="clear_recent_searches_content_desc">Clear searches</string>
+    <string name="no_data_found">No Data Found</string>
 </resources>

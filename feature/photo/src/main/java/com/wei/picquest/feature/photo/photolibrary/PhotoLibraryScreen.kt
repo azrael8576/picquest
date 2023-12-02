@@ -95,7 +95,6 @@ internal fun PhotoLibraryRoute(
     navController: NavController,
     viewModel: PhotoLibraryViewModel = hiltViewModel(),
 ) {
-    val query = "your_search_query" // 這應該是動態查詢字串
     val lazyPagingItems = viewModel.imagesState.collectAsLazyPagingItems()
     val uiStates: PhotoLibraryViewState by viewModel.states.collectAsStateWithLifecycle()
 
@@ -302,6 +301,37 @@ fun PagingStateHandling(lazyPagingItems: LazyPagingItems<ImageDetail>) {
             loadState.refresh is LoadState.Error -> PageLoaderError { retry() }
             loadState.append is LoadState.Loading -> LoadingNextPageItem()
             loadState.append is LoadState.Error -> ErrorMessage { retry() }
+        }
+        if (itemCount == 0 &&
+            loadState.append is LoadState.NotLoading &&
+            loadState.append.endOfPaginationReached
+        ) {
+            NoDataMessage()
+        }
+    }
+}
+
+@Composable
+fun NoDataMessage() {
+    val noDataFound = stringResource(R.string.no_data_found)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .semantics {
+                contentDescription = noDataFound
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "(´･ω･`)",
+                style = MaterialTheme.typography.displayMedium,
+            )
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
+            Text(
+                text = noDataFound,
+                style = MaterialTheme.typography.bodyLarge,
+            )
         }
     }
 }

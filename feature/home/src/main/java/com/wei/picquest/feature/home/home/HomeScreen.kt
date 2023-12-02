@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
@@ -26,7 +25,6 @@ import androidx.navigation.NavController
 import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.picquest.core.designsystem.component.ThemePreviews
 import com.wei.picquest.core.designsystem.theme.PqTheme
-import com.wei.picquest.core.designsystem.theme.SPACING_EXTRA_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.feature.home.R
 
@@ -92,9 +90,6 @@ internal fun HomeScreen(
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
             LazyColumn {
-                item {
-                    Spacer(modifier = Modifier.height(SPACING_EXTRA_LARGE.dp))
-                }
                 item {
                     val importantNotes = stringResource(id = R.string.important_notes)
                     Text(
