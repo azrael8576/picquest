@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">Retry</string>
+    <string name="error_message">發生錯誤，請稍後重試</string>
+    <string name="layout_switch_warning">因為網格採動態佈局，故切換佈局時會重新滾動至頂部。</string>
+    <string name="understand">了解</string>
+</resources>

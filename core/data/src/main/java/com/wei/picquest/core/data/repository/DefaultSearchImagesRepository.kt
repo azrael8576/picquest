@@ -1,35 +1,31 @@
 package com.wei.picquest.core.data.repository
 
-import com.wei.picquest.core.network.Dispatcher
-import com.wei.picquest.core.network.PqDispatchers
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.wei.picquest.core.data.model.ImageDetail
+import com.wei.picquest.core.data.model.asExternalModel
 import com.wei.picquest.core.network.PqNetworkDataSource
-import com.wei.picquest.core.network.model.NetworkSearchImages
-import kotlinx.coroutines.CoroutineDispatcher
+import com.wei.picquest.core.network.pagingsource.PixabayPagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-/**
- * Implementation of the [SearchImagesRepository].
- * @param ioDispatcher 用於執行 IO 相關操作的 CoroutineDispatcher。
- * @param network 數據源的網路接口。
- */
 class DefaultSearchImagesRepository @Inject constructor(
-    @Dispatcher(PqDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
-    private val network: PqNetworkDataSource,
+    private val pqNetworkDataSource: PqNetworkDataSource,
 ) : SearchImagesRepository {
 
-    /**
-     * @param query。A URL encoded search term. If omitted, all images are returned. This value may not exceed 100 characters.
-     * Example: "yellow+flower"
-     * @return 一個 Flow，內容為 Search Images 的數據。
-     */
-    override suspend fun getSearchImages(
-        query: String,
-    ): Flow<NetworkSearchImages> = withContext(ioDispatcher) {
-        flow {
-            emit(network.searchImages(query))
+    override suspend fun getSearchImages(query: String): Flow<PagingData<ImageDetail>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 5,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { PixabayPagingSource(pqNetworkDataSource, query) },
+        ).flow.map { pagingData ->
+            pagingData.map { it.asExternalModel() }
         }
     }
 }

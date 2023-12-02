@@ -29,3 +29,4 @@ include(":core:network")
 include(":ui-test-hilt-manifest")
 
 include(":feature:home")
+include(":feature:photolibrary")

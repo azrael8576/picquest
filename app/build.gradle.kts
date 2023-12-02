@@ -67,9 +67,9 @@ android {
 
 dependencies {
     implementation(project(":feature:home"))
+    implementation(project(":feature:photolibrary"))
 
     // TODO Wei
-//    implementation(project(":feature:login"))
 //    implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))

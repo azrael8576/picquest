@@ -62,7 +62,6 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
-    isPreview: Boolean = false,
 ) {
     val showPopup = remember { mutableStateOf(false) }
 
@@ -108,8 +107,6 @@ internal fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     PqTheme {
-        HomeScreen(
-            isPreview = true,
-        )
+        HomeScreen()
     }
 }
