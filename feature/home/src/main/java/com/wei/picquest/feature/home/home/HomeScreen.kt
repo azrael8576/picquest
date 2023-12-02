@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -15,12 +18,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.picquest.core.designsystem.component.ThemePreviews
 import com.wei.picquest.core.designsystem.theme.PqTheme
+import com.wei.picquest.core.designsystem.theme.SPACING_EXTRA_LARGE
+import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
+import com.wei.picquest.feature.home.R
 
 /**
  *
@@ -83,19 +91,21 @@ internal fun HomeScreen(
             if (withTopSpacer) {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
-
-            Column {
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "Screen not available \uD83D\uDE48",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier
-                        .semantics { contentDescription = "" },
-                )
-                Spacer(modifier = Modifier.weight(1f))
+            LazyColumn {
+                item {
+                    Spacer(modifier = Modifier.height(SPACING_EXTRA_LARGE.dp))
+                }
+                item {
+                    val importantNotes = stringResource(id = R.string.important_notes)
+                    Text(
+                        text = importantNotes,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .padding(SPACING_MEDIUM.dp)
+                            .semantics { contentDescription = importantNotes },
+                    )
+                }
             }
-
             if (withBottomSpacer) {
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
