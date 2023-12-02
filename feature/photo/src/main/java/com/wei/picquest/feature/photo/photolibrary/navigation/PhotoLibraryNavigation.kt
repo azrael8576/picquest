@@ -15,20 +15,23 @@ import java.net.URLEncoder
 private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 
 @VisibleForTesting
-internal const val photoSearchKeywordArg = "photoSearchKeyword"
+internal const val photoSearchQueryArg = "photoSearchQuery"
 
-internal class PhotoLibraryArgs(val photoSearchKeyword: String) {
+internal class PhotoLibraryArgs(val photoSearchQuery: String) {
     constructor(savedStateHandle: SavedStateHandle) :
         this(
             URLDecoder.decode(
-                checkNotNull(savedStateHandle[photoSearchKeywordArg]),
+                checkNotNull(savedStateHandle[photoSearchQueryArg]),
                 URL_CHARACTER_ENCODING,
             ),
         )
 }
 
-fun NavController.navigateToPhotoLibrary(photoSearchKeyword: String) {
-    val encodedKey = URLEncoder.encode(photoSearchKeyword, URL_CHARACTER_ENCODING)
+fun NavController.navigateToPhotoLibrary(photoSearchQuery: String) {
+    val encodedKey = URLEncoder.encode(
+        photoSearchQuery.ifBlank { "$photoSearchQuery " },
+        URL_CHARACTER_ENCODING,
+    )
     this.navigate("$photoSearchRoute/$encodedKey") {
         launchSingleTop = true
     }
@@ -38,9 +41,9 @@ fun NavGraphBuilder.photoLibraryGraph(
     navController: NavController,
 ) {
     composable(
-        route = "$photoSearchRoute/{$photoSearchKeywordArg}",
+        route = "$photoSearchRoute/{$photoSearchQueryArg}",
         arguments = listOf(
-            navArgument(photoSearchKeywordArg) { type = NavType.StringType },
+            navArgument(photoSearchQueryArg) { type = NavType.StringType },
         ),
     ) {
         PhotoLibraryRoute(

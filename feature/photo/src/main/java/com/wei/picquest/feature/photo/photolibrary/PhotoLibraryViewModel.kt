@@ -25,14 +25,14 @@ class PhotoLibraryViewModel @Inject constructor(
 
     private val photoLibraryArgs: PhotoLibraryArgs = PhotoLibraryArgs(savedStateHandle)
 
-    val photoSearchKeyword = photoLibraryArgs.photoSearchKeyword
+    val photoSearchQuery = photoLibraryArgs.photoSearchQuery
 
     private val _imagesState: MutableStateFlow<PagingData<ImageDetail>> =
         MutableStateFlow(value = PagingData.empty())
     val imagesState: MutableStateFlow<PagingData<ImageDetail>> get() = _imagesState
 
     init {
-        searchImages(photoSearchKeyword)
+        searchImages(photoSearchQuery)
     }
 
     private fun searchImages(query: String) {

@@ -14,12 +14,10 @@ fun NavController.navigateToPhotoSearch(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.photoSearchGraph(
     navController: NavController,
-    onSearchClick: (String) -> Unit,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
     composable(route = photoSearchRoute) {
         PhotoSearchRoute(
-            onSearchClick = onSearchClick,
             navController = navController,
         )
     }

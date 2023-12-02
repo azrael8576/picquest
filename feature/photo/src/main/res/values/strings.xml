@@ -4,4 +4,8 @@
     <string name="error_message">An error occurred, please try again later</string>
     <string name="layout_switch_warning">Switching layouts will reset the scroll position to the top due to the dynamic grid layout.</string>
     <string name="understand">Understand</string>
+    <string name="search">Search</string>
+    <string name="clear_search_text_content_desc">Clear search text</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_recent_searches_content_desc">Clear searches</string>
 </resources>

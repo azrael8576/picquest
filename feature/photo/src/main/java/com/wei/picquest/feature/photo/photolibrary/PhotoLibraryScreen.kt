@@ -145,10 +145,10 @@ fun BackButton(
         modifier = Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .semantics { contentDescription = "Back" },
+            .semantics { contentDescription = "Search" },
     ) {
         Icon(
-            imageVector = PqIcons.ArrowBack,
+            imageVector = PqIcons.Search,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
         )
@@ -281,9 +281,7 @@ fun ImageDetailItem(
                         modifier = if (layoutType == LayoutType.LIST) {
                             Modifier.size(300.dp)
                         } else {
-                            Modifier.size(
-                                80.dp,
-                            )
+                            Modifier.size(120.dp)
                         },
                     )
                 }
