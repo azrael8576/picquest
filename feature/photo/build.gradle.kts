@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.picquest.feature.photolibrary"
+    namespace = "com.wei.picquest.feature.photo"
 }
 
 dependencies {

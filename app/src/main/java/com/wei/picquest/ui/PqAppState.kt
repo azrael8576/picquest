@@ -27,8 +27,8 @@ import com.wei.picquest.core.designsystem.ui.isBookPosture
 import com.wei.picquest.core.designsystem.ui.isSeparating
 import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.home.home.navigation.navigateToHome
-import com.wei.picquest.feature.photolibrary.photolibrary.navigation.navigateToPhotoLibrary
-import com.wei.picquest.feature.photolibrary.photolibrary.navigation.photoLibraryRoute
+import com.wei.picquest.feature.photo.photosearch.navigation.navigateToPhotoSearch
+import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchRoute
 import com.wei.picquest.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -151,7 +151,7 @@ class PqAppState(
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             homeRoute -> TopLevelDestination.HOME
-            photoLibraryRoute -> TopLevelDestination.PHOTO_LIBRARY
+            photoSearchRoute -> TopLevelDestination.PHOTO
             else -> null
         }
 
@@ -199,7 +199,7 @@ class PqAppState(
                     topLevelNavOptions,
                 )
 
-                TopLevelDestination.PHOTO_LIBRARY -> navController.navigateToPhotoLibrary(
+                TopLevelDestination.PHOTO -> navController.navigateToPhotoSearch(
                     topLevelNavOptions,
                 )
 

@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.photolibrary.photolibrary.component
+package com.wei.picquest.feature.photo.photolibrary.component
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import com.wei.picquest.feature.photolibrary.R
+import com.wei.picquest.feature.photo.R
 
 @Composable
 fun LayoutSwitchWarningDialog(onDismiss: () -> Unit) {
