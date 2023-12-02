@@ -68,14 +68,13 @@ android {
 dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:photo"))
-
-    // TODO Wei
-//    implementation(project(":feature:contactme"))
+    implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+    // TODO Wei
 //    implementation(project(":core:datastore"))
 
     androidTestImplementation(project(":core:designsystem"))

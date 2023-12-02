@@ -30,3 +30,4 @@ include(":ui-test-hilt-manifest")
 
 include(":feature:home")
 include(":feature:photo")
+include(":feature:contactme")

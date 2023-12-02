@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
 import com.wei.picquest.core.designsystem.ui.DeviceOrientation
+import com.wei.picquest.feature.contactme.contactme.navigation.contactMeGraph
 import com.wei.picquest.feature.home.home.navigation.homeGraph
 import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.photo.photolibrary.navigation.photoLibraryGraph
@@ -43,6 +44,13 @@ fun PqNavHost(
             nestedGraphs = {
                 photoLibraryGraph(navController = navController)
             },
+        )
+        contactMeGraph(
+            navController = navController,
+            contentType = contentType,
+            displayFeatures = displayFeatures,
+            navigationType = navigationType,
+            nestedGraphs = { },
         )
     }
 }

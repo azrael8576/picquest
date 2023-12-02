@@ -25,6 +25,8 @@ import com.wei.picquest.core.designsystem.ui.PqNavigationType
 import com.wei.picquest.core.designsystem.ui.currentDeviceOrientation
 import com.wei.picquest.core.designsystem.ui.isBookPosture
 import com.wei.picquest.core.designsystem.ui.isSeparating
+import com.wei.picquest.feature.contactme.contactme.navigation.contactMeRoute
+import com.wei.picquest.feature.contactme.contactme.navigation.navigateToContactMe
 import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.home.home.navigation.navigateToHome
 import com.wei.picquest.feature.photo.photosearch.navigation.navigateToPhotoSearch
@@ -152,6 +154,7 @@ class PqAppState(
         @Composable get() = when (currentDestination?.route) {
             homeRoute -> TopLevelDestination.HOME
             photoSearchRoute -> TopLevelDestination.PHOTO
+            contactMeRoute -> TopLevelDestination.CONTACT_ME
             else -> null
         }
 
@@ -203,9 +206,9 @@ class PqAppState(
                     topLevelNavOptions,
                 )
 
-//                TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
-//                    topLevelNavOptions,
-//                )
+                TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
+                    topLevelNavOptions,
+                )
 
                 else -> showFunctionalityNotAvailablePopup.value = true
             }
