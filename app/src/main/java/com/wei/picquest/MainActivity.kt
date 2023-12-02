@@ -79,7 +79,8 @@ class MainActivity : ComponentActivity() {
         }
 
         lifecycleScope.launch {
-            // TODO Wei Loading user data
+            // TODO Wei Loading user data,
+            //  e.g. Photo ViewType, Search record
             delay(2_000)
             splashScreen.setKeepOnScreenCondition { false }
         }
