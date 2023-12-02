@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="important_notes">
+        ❗Important Notes:\n
+        - This App uses Pixabay API as its image source.\n
+        - For developers:\nPlease replace the API_KEY in `${Project_Root_Directory}/secrets.defaults.properties` with your Pixabay API key.\n
+        - For non-developers:\nEnsure that your App Apk is sourced from github.com/azrael8576/picquest, specifically from the apk in the project\'s Releases.\n
+         \n
+        ⚠️Known Issues:\n
+        - Currently, this project does not use any local storage solution.\n
+        - The recent search keywords is stored at the Screen level, meaning that the keywords will be cleared when you navigate back to the top page.
+    </string>
+</resources>
