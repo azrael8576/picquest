@@ -1,11 +1,13 @@
-package com.wei.picquest.feature.photolibrary.photolibrary
+package com.wei.picquest.feature.photo.photolibrary
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.wei.picquest.core.base.BaseViewModel
 import com.wei.picquest.core.data.model.ImageDetail
 import com.wei.picquest.core.data.repository.SearchImagesRepository
+import com.wei.picquest.feature.photo.photolibrary.navigation.PhotoLibraryArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -14,19 +16,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhotoLibraryViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val searchImagesRepository: SearchImagesRepository,
 ) : BaseViewModel<
     PhotoLibraryViewAction,
     PhotoLibraryViewState,
     >(PhotoLibraryViewState()) {
 
+    private val photoLibraryArgs: PhotoLibraryArgs = PhotoLibraryArgs(savedStateHandle)
+
+    val photoSearchKeyword = photoLibraryArgs.photoSearchKeyword
+
     private val _imagesState: MutableStateFlow<PagingData<ImageDetail>> =
         MutableStateFlow(value = PagingData.empty())
     val imagesState: MutableStateFlow<PagingData<ImageDetail>> get() = _imagesState
 
     init {
-        // TODO Wei
-        searchImages("")
+        searchImages(photoSearchKeyword)
     }
 
     private fun searchImages(query: String) {
@@ -50,7 +56,6 @@ class PhotoLibraryViewModel @Inject constructor(
 
     override fun dispatch(action: PhotoLibraryViewAction) {
         when (action) {
-            is PhotoLibraryViewAction.SearchImages -> searchImages(action.query)
             is PhotoLibraryViewAction.SwitchLayoutType -> switchLayoutType()
         }
     }

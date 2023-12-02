@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.photolibrary.photolibrary
+package com.wei.picquest.feature.photo.photolibrary
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -54,13 +54,12 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.wei.picquest.core.data.model.ImageDetail
-import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.picquest.core.designsystem.icon.PqIcons
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
-import com.wei.picquest.feature.photolibrary.R
-import com.wei.picquest.feature.photolibrary.photolibrary.component.LayoutSwitchWarningDialog
+import com.wei.picquest.feature.photo.R
+import com.wei.picquest.feature.photo.photolibrary.component.LayoutSwitchWarningDialog
 
 /**
  *
@@ -109,6 +108,7 @@ internal fun PhotoLibraryRoute(
 
             TopBarActions(
                 layoutType = uiStates.layoutType,
+                onBackClick = navController::popBackStack,
                 onSwitchLayoutClick = {
                     viewModel.dispatch(PhotoLibraryViewAction.SwitchLayoutType)
                 },
@@ -120,12 +120,13 @@ internal fun PhotoLibraryRoute(
 @Composable
 fun TopBarActions(
     layoutType: LayoutType,
+    onBackClick: () -> Unit,
     onSwitchLayoutClick: () -> Unit,
 ) {
     Column {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         Row(modifier = Modifier.padding(SPACING_MEDIUM.dp)) {
-            BackButton()
+            BackButton(onBackClick = onBackClick)
             Spacer(modifier = Modifier.weight(1f))
             SwitchLayoutButton(
                 layoutType = layoutType,
@@ -136,22 +137,11 @@ fun TopBarActions(
 }
 
 @Composable
-fun BackButton() {
-    val showPopup = remember { mutableStateOf(false) }
-
-    if (showPopup.value) {
-        FunctionalityNotAvailablePopup(
-            onDismiss = {
-                showPopup.value = false
-            },
-        )
-    }
-
+fun BackButton(
+    onBackClick: () -> Unit,
+) {
     IconButton(
-        onClick = {
-            /* TODO: Implement back button action */
-            showPopup.value = true
-        },
+        onClick = { onBackClick() },
         modifier = Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -208,12 +198,6 @@ fun PhotoLibraryListScreen(
         Box(modifier = Modifier.fillMaxSize()) {
             Column {
                 LazyColumn(modifier = Modifier.weight(1f)) {
-                    if (withTopSpacer) {
-                        item {
-                            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                        }
-                    }
-
                     items(lazyPagingItems.itemCount) { index ->
                         lazyPagingItems[index]?.let {
                             ImageDetailItem(
@@ -222,15 +206,11 @@ fun PhotoLibraryListScreen(
                             )
                         }
                     }
-
-                    if (withBottomSpacer) {
-                        item {
-                            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
-                        }
-                    }
                 }
-
                 PagingStateHandling(lazyPagingItems)
+                if (withBottomSpacer) {
+                    Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+                }
             }
         }
     }
@@ -254,12 +234,6 @@ fun PhotoLibraryGridScreen(
                     verticalItemSpacing = 0.dp,
                     flingBehavior = ScrollableDefaults.flingBehavior(),
                 ) {
-                    if (withTopSpacer) {
-                        item {
-                            Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                        }
-                    }
-
                     items(lazyPagingItems.itemCount) { index ->
                         lazyPagingItems[index]?.let {
                             ImageDetailItem(
@@ -268,15 +242,12 @@ fun PhotoLibraryGridScreen(
                             )
                         }
                     }
-
-                    if (withBottomSpacer) {
-                        item {
-                            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
-                        }
-                    }
                 }
 
                 PagingStateHandling(lazyPagingItems)
+                if (withBottomSpacer) {
+                    Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+                }
             }
         }
     }

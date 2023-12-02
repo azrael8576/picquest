@@ -58,6 +58,7 @@ import com.wei.picquest.core.manager.SnackbarState
 import com.wei.picquest.core.utils.UiText
 import com.wei.picquest.navigation.PqNavHost
 import com.wei.picquest.navigation.TopLevelDestination
+import timber.log.Timber
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -294,6 +295,8 @@ private fun PqBottomBar(
 
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {
+        Timber.e("PQ isTopLevelDestinationInHierarchy " + it.route.toString())
+        Timber.e("PQ destination " + destination.name.toString())
         it.route?.contains(destination.name, true) ?: false
     } ?: false
 

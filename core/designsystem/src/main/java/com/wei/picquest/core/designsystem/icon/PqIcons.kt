@@ -1,7 +1,6 @@
 package com.wei.picquest.core.designsystem.icon
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.PhotoLibrary
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.ArrowForwardIos
-import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.Home
@@ -44,8 +42,6 @@ object PqIcons {
     val InfoBorder = Icons.Outlined.Info
     val Home = Icons.Rounded.Home
     val HomeBorder = Icons.Outlined.Home
-    val Schedule = Icons.Rounded.CalendarMonth
-    val ScheduleBorder = Icons.Outlined.CalendarMonth
     val ContactMe = Icons.Rounded.SupportAgent
     val ContactMeBorder = Icons.Outlined.SupportAgent
     val PhotoLibrary = Icons.Rounded.PhotoLibrary

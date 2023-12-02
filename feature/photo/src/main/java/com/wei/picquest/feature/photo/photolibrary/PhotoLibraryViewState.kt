@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.photolibrary.photolibrary
+package com.wei.picquest.feature.photo.photolibrary
 
 import com.wei.picquest.core.base.Action
 import com.wei.picquest.core.base.State
@@ -8,9 +8,6 @@ enum class LayoutType {
 }
 
 sealed class PhotoLibraryViewAction : Action {
-    data class SearchImages(
-        val query: String,
-    ) : PhotoLibraryViewAction()
 
     object SwitchLayoutType : PhotoLibraryViewAction()
 }

@@ -21,11 +21,11 @@ enum class TopLevelDestination(
         iconTextId = R.string.home,
         titleTextId = R.string.home,
     ),
-    PHOTO_LIBRARY(
+    PHOTO(
         selectedIcon = PqIcons.PhotoLibrary,
         unselectedIcon = PqIcons.PhotoLibraryBorder,
-        iconTextId = R.string.photo_library,
-        titleTextId = R.string.photo_library,
+        iconTextId = R.string.photo,
+        titleTextId = R.string.photo,
     ),
     CONTACT_ME(
         selectedIcon = PqIcons.ContactMe,

@@ -335,14 +335,14 @@ object PqNavigationDefaults {
     fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer
 }
 
-internal val previewItems = listOf("Schedule", "Home", "Contact Me")
+internal val previewItems = listOf("Home", "Photo", "Contact Me")
 internal val previewIcons = listOf(
-    PqIcons.ScheduleBorder,
     PqIcons.HomeBorder,
+    PqIcons.PhotoLibraryBorder,
     PqIcons.ContactMeBorder,
 )
 internal val previewSelectedIcons = listOf(
-    PqIcons.Schedule,
     PqIcons.Home,
+    PqIcons.PhotoLibrary,
     PqIcons.ContactMe,
 )

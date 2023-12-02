@@ -7,7 +7,9 @@ import androidx.window.layout.DisplayFeature
 import com.wei.picquest.core.designsystem.ui.DeviceOrientation
 import com.wei.picquest.feature.home.home.navigation.homeGraph
 import com.wei.picquest.feature.home.home.navigation.homeRoute
-import com.wei.picquest.feature.photolibrary.photolibrary.navigation.photoLibraryGraph
+import com.wei.picquest.feature.photo.photolibrary.navigation.navigateToPhotoLibrary
+import com.wei.picquest.feature.photo.photolibrary.navigation.photoLibraryGraph
+import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchGraph
 import com.wei.picquest.ui.PqAppState
 
 /**
@@ -37,8 +39,12 @@ fun PqNavHost(
         homeGraph(
             navController = navController,
         )
-        photoLibraryGraph(
+        photoSearchGraph(
             navController = navController,
+            onSearchClick = navController::navigateToPhotoLibrary,
+            nestedGraphs = {
+                photoLibraryGraph(navController = navController)
+            },
         )
     }
 }
