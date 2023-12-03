@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="important_notes">
-        ❗重要提示：\n\n
-        - 這個 App 使用 Pixabay API 作為圖片來源。\n\n
-        - 對於開發人員：請將 `${專案根目錄}/secrets.defaults.properties` 中的 API_KEY 替換為你的 Pixabay API 金鑰。\n\n
-        - 對於非開發人員：確保你的 App Apk 來源為 github.com/azrael8576/picquest 此專案 Releases 之 apk。\n\n
-        ⚠️已知問題：\n\n
-        - 目前本專案尚未使用本地儲存方案。\n\n
-        - 最近搜尋關鍵字為 Screen 屏幕級別儲存，這意味著當你回退至頂部頁會清除已儲存的搜尋關鍵字。
+    <string name="important_note">
+        ❗重要提示：
+    </string>
+    <string name="important_note_message">
+        • PicQuest 使用 Pixabay API 作為圖片來源。\n\n
+        • 對於開發人員：請將 `${專案根目錄}/secrets.defaults.properties` 中的 API_KEY 替換為你的 Pixabay API 金鑰。\n\n
+        • 對於非開發人員：確保你的 PicQuest Apk 來源為 github.com/azrael8576/picquest 此專案 Releases 之 apk。\n\n
     </string>
 </resources>

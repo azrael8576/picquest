@@ -91,13 +91,21 @@ internal fun HomeScreen(
             }
             LazyColumn {
                 item {
-                    val importantNotes = stringResource(id = R.string.important_notes)
+                    val importantNote = stringResource(id = R.string.important_note)
+                    val importantNoteMessage = stringResource(id = R.string.important_note_message)
                     Text(
-                        text = importantNotes,
+                        text = importantNote,
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier
+                            .padding(SPACING_MEDIUM.dp)
+                            .semantics { contentDescription = importantNote },
+                    )
+                    Text(
+                        text = importantNoteMessage,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(SPACING_MEDIUM.dp)
-                            .semantics { contentDescription = importantNotes },
+                            .semantics { contentDescription = importantNoteMessage },
                     )
                 }
             }
