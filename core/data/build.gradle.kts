@@ -17,6 +17,5 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:network"))
     implementation(project(":core:model"))
-    // TODO Wei
-//    implementation(project(":core:datastore"))
+    implementation(project(":core:datastore"))
 }

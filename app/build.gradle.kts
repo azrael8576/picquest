@@ -74,10 +74,10 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
-    // TODO Wei
-//    implementation(project(":core:datastore"))
+    implementation(project(":core:datastore"))
 
     androidTestImplementation(project(":core:designsystem"))
+    // TODO Wei
 //    androidTestImplementation(project(":core:datastore-test"))
     androidTestImplementation(project(":core:testing"))
     androidTestImplementation(libs.androidx.navigation.testing)
