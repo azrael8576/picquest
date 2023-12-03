@@ -1,8 +1,6 @@
 
 # PicQuest
-[![Android CI](https://github.com/azrael8576/picquest/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/picquest/actions/workflows/Build.yml)  
-[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/picquest)](https://github.com/azrael8576/picquest/releases)  
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/picquest/blob/main/LICENSE)
+[![Android CI](https://github.com/azrael8576/picquest/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/picquest/actions/workflows/Build.yml)  [![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/picquest)](https://github.com/azrael8576/picquest/releases)  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/picquest/blob/main/LICENSE)
 
 ![Logo](docs/images/logo.png)
 
@@ -89,28 +87,58 @@
 
 本專案遵循了 [_Android 官方應用架構指南_](https://developer.android.com/topic/architecture?hl=en)。
 
+### MVI 最佳實踐
+
+#### UI 事件決策樹：
+以下圖表顯示尋找處理特定事件用途最佳方式時的決策樹。  
+![image](https://developer.android.com/static/topic/libraries/architecture/images/mad-arch-uievents-tree.png?hl=en)
+
+#### UI 事件：
+不要使用 `Channels`, `SharedFlow` 或其他回應式串流向 UI 公開 ViewModel 事件。
+
+1) **立即處理一次性的 ViewModel 事件，並將其降為 UI 狀態。**
+2) **使用可觀察的數據持有類型來公開狀態。**
+
+> **Note:** 關於不應使用上述 API 的理由和示例，
+>
+> 請參閱 Google 官方網誌文章 [_ViewModel: One-off event antipatterns_](https://medium.com/androiddevelopers/viewmodel-one-off-event-antipatterns-16a1da869b95)
+
 ## Modularization
 
 
+
 ### Types of modules in PicQuest
-![image](https://github.com/azrael8576/picquest/blob/main/docs/images/modularization-graph.drawio.png)**Top tip**：模組圖（如上所示）在模組化規劃期間有助於視覺化展示模組間的依賴性。
+
+![image](https://github.com/azrael8576/picquest/blob/main/docs/images/modularization-graph.drawio.png)
+
+**Top tip**：模組圖（如上所示）在模組化規劃期間有助於視覺化展示模組間的依賴性。
 
 PicQuest 主要包含以下幾種模組:
 
 - `app` 模組 - 此模組包含 app 級別的核心組件和 scaffolding 類，例如 `MainActivity`、`PqApp` 以及 app 級別控制的導航。`app` 模組將會依賴所有的 `feature` 模組和必要的 `core` 模組。
- - `feature:` 模組 - 這些模組各自專注於某個特定功能或用戶的互動流程。每個模組都只聚焦於一個特定的功能職責。如果某個類別只被一個 `feature` 模組所需要，那麼它應只存在於該模組中；若非如此，則應該將其移至適當的 `core` 模組。每個 `feature` 模組應避免依賴其他 `feature` 模組，並只應依賴其所需的 `core` 模組。
- - `core:` 模組 - 這些模組是公共的函式庫模組，它們包含了眾多輔助功能的程式碼和那些需要在多個模組間共享的依賴項。這些模組可以依賴其他 `core` 模組，但絕不應依賴於`feature`模組或`app`模組。
- - 其他各種模組：例如 `testing` 模組，主要用於進行軟體測試。  
- ### Modules  
- 採用上述模組化策略，PicQuest 應用程序具有以下模組：  
- | Name | Responsibilities | Key classes and good examples |  
-|:----:|:----:|:-----------------:|  
-| `app` |  將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `PqApplication,`<br>`PqNavHost`<br>`TopLevelDestination`<br>`PqApp`<br>`PqAppState` | |  `feature:1`,<br>`feature:2`<br>... |  負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。 |  `PhotoSearchScreen,`<br>... |  
-| `core:data` |  負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`| |  `core:common`  |  包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 |  `network/PqDispatchers,`<br>`result/DataSourceResult,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`utils/UiText`<br>... |  
-| `core:domain` |  包含被多個模組共享的 UseCase。 |  | |  `core:model`  |  提供整個應用程式所使用的模型類別。 |  `UserData,`<br>... |  
-| `core:network` |  負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitPqNetwork` | |  `core:designsystem`  | UI 依賴項。<br>eg. app theme、Core UI 元件樣式...等 |  `PqTheme,`<br>`PqAppSnackbar`<br>... |  
-| `core:testing` |  測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`PqTestRunner,`<br>... | |  `core:datastore`  |  儲存持久性數據 |  `PqPreferencesDataSource,`<br>`UserPreferencesSerializer,`<br>... |
 
+- `feature:` 模組 - 這些模組各自專注於某個特定功能或用戶的互動流程。每個模組都只聚焦於一個特定的功能職責。如果某個類別只被一個 `feature` 模組所需要，那麼它應只存在於該模組中；若非如此，則應該將其移至適當的 `core` 模組。每個 `feature` 模組應避免依賴其他 `feature` 模組，並只應依賴其所需的 `core` 模組。
+
+- `core:` 模組 - 這些模組是公共的函式庫模組，它們包含了眾多輔助功能的程式碼和那些需要在多個模組間共享的依賴項。這些模組可以依賴其他 `core` 模組，但絕不應依賴於`feature`模組或`app`模組。
+
+- 其他各種模組：例如 `testing` 模組，主要用於進行軟體測試。
+
+### Modules
+
+採用上述模組化策略，PicQuest 應用程序具有以下模組：
+
+| Name | Responsibilities | Key classes and good examples |
+|:----:|:----:|:-----------------:|
+| `app` |  將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `PqApplication,`<br>`PqNavHost`<br>`TopLevelDestination`<br>`PqApp`<br>`PqAppState` |
+|  `feature:1`,<br>`feature:2`<br>... |  負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。 |  `PhotoSearchScreen,`<br>... |
+| `core:data` |  負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|
+|  `core:common`  |  包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 |  `network/PqDispatchers,`<br>`result/DataSourceResult,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`utils/UiText`<br>... |
+| `core:domain` |  包含被多個模組共享的 UseCase。 |  |
+|  `core:model`  |  提供整個應用程式所使用的模型類別。 |  `UserData,`<br>... |
+| `core:network` |  負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitPqNetwork` |
+|  `core:designsystem`  | UI 依賴項。<br>eg. app theme、Core UI 元件樣式...等 |  `PqTheme,`<br>`PqAppSnackbar`<br>... |
+| `core:testing` |  測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`PqTestRunner,`<br>... |
+|  `core:datastore`  |  儲存持久性數據 |  `PqPreferencesDataSource,`<br>`UserPreferencesSerializer,`<br>... |
 
 ## Testing
 
