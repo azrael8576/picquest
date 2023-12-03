@@ -1,7 +1,9 @@
 package com.wei.picquest.core.data.di
 
 import com.wei.picquest.core.data.repository.DefaultSearchImagesRepository
+import com.wei.picquest.core.data.repository.DefaultUserDataRepository
 import com.wei.picquest.core.data.repository.SearchImagesRepository
+import com.wei.picquest.core.data.repository.UserDataRepository
 import com.wei.picquest.core.data.utils.ConnectivityManagerNetworkMonitor
 import com.wei.picquest.core.data.utils.NetworkMonitor
 import dagger.Binds
@@ -22,4 +24,9 @@ interface DataModule {
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
     ): NetworkMonitor
+
+    @Binds
+    fun bindsUserDataRepository(
+        userDataRepository: DefaultUserDataRepository,
+    ): UserDataRepository
 }
