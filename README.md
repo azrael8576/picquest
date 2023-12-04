@@ -131,7 +131,7 @@ PicQuest 主要包含以下幾種模組:
 |:----:|:----:|:-----------------:|
 | `app` |  將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `PqApplication,`<br>`PqNavHost`<br>`TopLevelDestination`<br>`PqApp`<br>`PqAppState` |
 |  `feature:1`,<br>`feature:2`<br>... |  負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。 |  `PhotoSearchScreen,`<br>... |
-| `core:data` |  負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|
+| `core:data` |  負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `SearchImagesRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|
 |  `core:common`  |  包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 |  `network/PqDispatchers,`<br>`result/DataSourceResult,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`utils/UiText`<br>... |
 | `core:domain` |  包含被多個模組共享的 UseCase。 |  |
 |  `core:model`  |  提供整個應用程式所使用的模型類別。 |  `UserData,`<br>... |
