@@ -37,7 +37,7 @@ interface RetrofitPixabayApi {
     /**
      * https://pixabay.com/api/videos/?key=${api key}&q=yellow+flowers
      */
-    @GET("/videos/")
+    @GET("./videos/")
     suspend fun searchVideos(
         @Query("key") apiKey: String = API_KEY,
         @Query("q") query: String,

@@ -1,26 +1,48 @@
 package com.wei.picquest.feature.video.videolibrary
 
+import android.net.Uri
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.wei.picquest.core.data.model.VideoDetail
 import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
-import com.wei.picquest.core.designsystem.component.ThemePreviews
-import com.wei.picquest.core.designsystem.theme.PqTheme
 
 /**
  *
@@ -54,12 +76,17 @@ import com.wei.picquest.core.designsystem.theme.PqTheme
 @Composable
 internal fun VideoLibraryRoute(
     navController: NavController,
+    viewModel: VideoLibraryViewModel = hiltViewModel(),
 ) {
-    VideoLibraryScreen()
+    val lazyPagingItems = viewModel.videosState.collectAsLazyPagingItems()
+
+    VideoLibraryScreen(lazyPagingItems)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun VideoLibraryScreen(
+    lazyPagingItems: LazyPagingItems<VideoDetail>,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
 ) {
@@ -84,16 +111,20 @@ internal fun VideoLibraryScreen(
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
 
-            Column {
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "Screen not available \uD83D\uDE48",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier
-                        .semantics { contentDescription = "" },
-                )
-                Spacer(modifier = Modifier.weight(1f))
+            val pagerState = rememberPagerState(
+                initialPage = 0,
+                initialPageOffsetFraction = 0f,
+                pageCount = { lazyPagingItems.itemCount },
+            )
+
+            VerticalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize(),
+            ) { page ->
+                val videoDetail = lazyPagingItems[page]
+                videoDetail?.let {
+                    VideoPlayer(uri = it.videos.tiny.url.toUri())
+                }
             }
 
             if (withBottomSpacer) {
@@ -103,10 +134,66 @@ internal fun VideoLibraryScreen(
     }
 }
 
-@ThemePreviews
+@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun VideoLibraryScreenPreview() {
-    PqTheme {
-        VideoLibraryScreen()
+fun VideoPlayer(uri: Uri) {
+    val context = LocalContext.current
+    val isPlayerReady = remember { mutableStateOf(false) }
+
+    val exoPlayer = remember(uri) {
+        ExoPlayer.Builder(context).build().apply {
+            playWhenReady = true
+            videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
+            repeatMode = Player.REPEAT_MODE_ONE
+
+            addListener(object : Player.Listener {
+                override fun onPlaybackStateChanged(state: Int) {
+                    isPlayerReady.value = (state == Player.STATE_READY)
+                }
+            })
+
+            val dataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(context)
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(uri))
+
+            setMediaSource(mediaSource)
+            prepare()
+        }
+    }
+
+    DisposableEffect(uri) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
+
+    Box {
+        AndroidView(
+            factory = {
+                PlayerView(it).apply {
+                    useController = false
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                    player = exoPlayer
+                    alpha = if (isPlayerReady.value) 0f else 1f
+                }
+            },
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        if (!isPlayerReady.value) {
+            LoadingView()
+        }
+    }
+}
+
+@Composable
+private fun LoadingView() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(30.dp))
     }
 }

@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DefaultSearchVideoRepository @Inject constructor(
+class DefaultSearchVideosRepository @Inject constructor(
     private val pqNetworkDataSource: PqNetworkDataSource,
-) : SearchVideoRepository {
+) : SearchVideosRepository {
 
     override suspend fun getSearchVideo(query: String): Flow<PagingData<VideoDetail>> {
         return Pager(
