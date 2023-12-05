@@ -27,6 +27,12 @@ enum class TopLevelDestination(
         iconTextId = R.string.photo,
         titleTextId = R.string.photo,
     ),
+    VIDEO(
+        selectedIcon = PqIcons.VideoLibrary,
+        unselectedIcon = PqIcons.VideoLibraryBorder,
+        iconTextId = R.string.video,
+        titleTextId = R.string.video,
+    ),
     CONTACT_ME(
         selectedIcon = PqIcons.ContactMe,
         unselectedIcon = PqIcons.ContactMeBorder,

@@ -6,6 +6,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material.icons.outlined.SupportAgent
 import androidx.compose.material.icons.outlined.Upcoming
+import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.SupportAgent
 import androidx.compose.material.icons.rounded.Upcoming
+import androidx.compose.material.icons.rounded.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -46,6 +48,8 @@ object PqIcons {
     val ContactMeBorder = Icons.Outlined.SupportAgent
     val PhotoLibrary = Icons.Rounded.PhotoLibrary
     val PhotoLibraryBorder = Icons.Outlined.PhotoLibrary
+    val VideoLibrary = Icons.Rounded.VideoLibrary
+    val VideoLibraryBorder = Icons.Outlined.VideoLibrary
     val Phone = Icons.Rounded.Phone
     val Upcoming = Icons.Rounded.Upcoming
     val UpcomingBorder = Icons.Outlined.Upcoming

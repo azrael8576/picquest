@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.wei.core.network.BuildConfig
 import com.wei.picquest.core.network.PqNetworkDataSource
 import com.wei.picquest.core.network.model.NetworkSearchImages
+import com.wei.picquest.core.network.model.NetworkSearchVideos
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,6 +33,19 @@ interface RetrofitPixabayApi {
         @Query("perPage") perPage: Int,
         // Add more parameters as needed
     ): NetworkSearchImages
+
+    /**
+     * https://pixabay.com/api/videos/?key=${api key}&q=yellow+flowers
+     */
+    @GET("/videos/")
+    suspend fun searchVideos(
+        @Query("key") apiKey: String = API_KEY,
+        @Query("q") query: String,
+        @Query("video_type") videoType: String = "film",
+        @Query("page") page: Int,
+        @Query("perPage") perPage: Int,
+        // Add more parameters as needed
+    ): NetworkSearchVideos
 }
 
 /**
@@ -54,5 +68,9 @@ class RetrofitPqNetwork @Inject constructor(
 
     override suspend fun searchImages(query: String, page: Int, perPage: Int): NetworkSearchImages {
         return pixabayApi.searchImages(query = query, page = page, perPage = perPage)
+    }
+
+    override suspend fun searchVideos(query: String, page: Int, perPage: Int): NetworkSearchVideos {
+        return pixabayApi.searchVideos(query = query, page = page, perPage = perPage)
     }
 }

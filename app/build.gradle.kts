@@ -68,6 +68,7 @@ android {
 dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:photo"))
+    implementation(project(":feature:video"))
     implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))
