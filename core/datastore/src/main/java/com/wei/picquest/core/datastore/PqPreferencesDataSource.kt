@@ -33,7 +33,8 @@ class PqPreferencesDataSource @Inject constructor(
                 LanguageConfigProto.LANGUAGE_CONFIG_ENGLISH -> LanguageConfig.ENGLISH
                 LanguageConfigProto.LANGUAGE_CONFIG_CHINESE -> LanguageConfig.CHINESE
             },
-            recentSearchQueries = it.recentSearchQueriesList,
+            recentSearchPhotoQueries = it.recentSearchPhotoQueriesList,
+            recentSearchVideoQueries = it.recentSearchVideoQueriesList,
         )
     }
 
@@ -45,38 +46,69 @@ class PqPreferencesDataSource @Inject constructor(
                 }
             }
         } catch (ioException: IOException) {
-            Log.e("AtPreferences", "Failed to update user preferences", ioException)
+            Log.e("PqPreferences", "Failed to update user preferences", ioException)
         }
     }
 
-    suspend fun addRecentSearchQuery(newQuery: String) {
+    suspend fun addRecentSearchPhotoQuery(newQuery: String) {
         try {
             userPreferences.updateData { preferences ->
-                val updatedQueries = preferences.recentSearchQueriesList.toMutableList().apply {
+                val updatedQueries = preferences.recentSearchPhotoQueriesList.toMutableList().apply {
                     // 移除既有相同的查詢（如果存在），然後添加到列表末尾
                     remove(newQuery)
                     add(newQuery)
                     if (size > 10) removeAt(0)
                 }
                 preferences.toBuilder()
-                    .clearRecentSearchQueries()
-                    .addAllRecentSearchQueries(updatedQueries)
+                    .clearRecentSearchPhotoQueries()
+                    .addAllRecentSearchPhotoQueries(updatedQueries)
                     .build()
             }
         } catch (ioException: IOException) {
-            Log.e("PqPreferencesDataSource", "Failed to update recent search queries", ioException)
+            Log.e("PqPreferencesDataSource", "Failed to update recent search photo queries", ioException)
         }
     }
 
-    suspend fun clearRecentSearchQueries() {
+    suspend fun clearRecentSearchPhotoQueries() {
         try {
             userPreferences.updateData { preferences ->
                 preferences.toBuilder()
-                    .clearRecentSearchQueries()
+                    .clearRecentSearchPhotoQueries()
                     .build()
             }
         } catch (ioException: IOException) {
-            Log.e("PqPreferencesDataSource", "Failed to clear recent search queries", ioException)
+            Log.e("PqPreferencesDataSource", "Failed to clear recent search photo queries", ioException)
+        }
+    }
+
+    suspend fun addRecentSearchVideoQuery(newQuery: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                val updatedQueries = preferences.recentSearchVideoQueriesList.toMutableList().apply {
+                    // 移除既有相同的查詢（如果存在），然後添加到列表末尾
+                    remove(newQuery)
+                    add(newQuery)
+                    if (size > 10) removeAt(0)
+                }
+                preferences.toBuilder()
+                    .clearRecentSearchVideoQueries()
+                    .addAllRecentSearchVideoQueries(updatedQueries)
+                    .build()
+            }
+        } catch (ioException: IOException) {
+            Log.e("PqPreferencesDataSource", "Failed to update recent search video queries", ioException)
+        }
+    }
+
+    suspend fun clearRecentSearchVideoQueries() {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences.toBuilder()
+                    .clearRecentSearchVideoQueries()
+                    .build()
+            }
+        } catch (ioException: IOException) {
+            Log.e("PqPreferencesDataSource", "Failed to clear recent search video queries", ioException)
         }
     }
 }

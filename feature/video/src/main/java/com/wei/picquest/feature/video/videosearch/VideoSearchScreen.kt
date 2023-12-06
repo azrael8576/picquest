@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.photo.photosearch
+package com.wei.picquest.feature.video.videosearch
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,8 +55,8 @@ import com.wei.picquest.core.designsystem.icon.PqIcons
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
-import com.wei.picquest.feature.photo.R
-import com.wei.picquest.feature.photo.photolibrary.navigation.navigateToPhotoLibrary
+import com.wei.picquest.feature.video.R
+import com.wei.picquest.feature.video.videolibrary.navigation.navigateToVideoLibrary
 
 /**
  *
@@ -88,35 +88,35 @@ import com.wei.picquest.feature.photo.photolibrary.navigation.navigateToPhotoLib
  *
  */
 @Composable
-internal fun PhotoSearchRoute(
+internal fun VideoSearchRoute(
     navController: NavController,
-    viewModel: PhotoSearchViewModel = hiltViewModel(),
+    viewModel: VideoSearchViewModel = hiltViewModel(),
 ) {
-    val uiStates: PhotoSearchViewState by viewModel.states.collectAsStateWithLifecycle()
+    val uiStates: VideoSearchViewState by viewModel.states.collectAsStateWithLifecycle()
 
-    PhotoSearchScreen(
+    VideoSearchScreen(
         uiStates = uiStates,
         onSearchQueryChanged = {
-            viewModel.dispatch(PhotoSearchViewAction.SearchQueryChanged(it))
+            viewModel.dispatch(VideoSearchViewAction.SearchQueryChanged(it))
         },
 
         onSearchTriggered = {
-            viewModel.dispatch(PhotoSearchViewAction.SearchTriggered(it))
-            navController.navigateToPhotoLibrary(it)
+            viewModel.dispatch(VideoSearchViewAction.SearchTriggered(it))
+            navController.navigateToVideoLibrary(it)
         },
         onRecentSearchClicked = {
-            viewModel.dispatch(PhotoSearchViewAction.RecentSearchClicked(it))
-            navController.navigateToPhotoLibrary(it)
+            viewModel.dispatch(VideoSearchViewAction.RecentSearchClicked(it))
+            navController.navigateToVideoLibrary(it)
         },
         onClearRecentSearches = {
-            viewModel.dispatch(PhotoSearchViewAction.ClearRecentSearchQueriesClicked)
+            viewModel.dispatch(VideoSearchViewAction.ClearRecentSearchQueriesClicked)
         },
     )
 }
 
 @Composable
-internal fun PhotoSearchScreen(
-    uiStates: PhotoSearchViewState,
+internal fun VideoSearchScreen(
+    uiStates: VideoSearchViewState,
     onSearchQueryChanged: (String) -> Unit,
     onSearchTriggered: (String) -> Unit,
     onRecentSearchClicked: (String) -> Unit,
@@ -182,7 +182,7 @@ private fun RecentSearchesBody(
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append(stringResource(id = R.string.recent_searches))
+                        append(stringResource(id = R.string.recent_video_searches))
                     }
                 },
                 modifier = Modifier.padding(
@@ -304,11 +304,11 @@ private fun SearchTextField(
 
 @ThemePreviews
 @Composable
-fun PhotoSearchScreenPreview() {
+fun VideoSearchScreenPreview() {
     PqTheme {
-        PhotoSearchScreen(
-            uiStates = PhotoSearchViewState(
-                searchQuery = "cat",
+        VideoSearchScreen(
+            uiStates = VideoSearchViewState(
+                searchQuery = "cat video",
                 recentSearchQueries = listOf(
                     "cat",
                     "mouse",

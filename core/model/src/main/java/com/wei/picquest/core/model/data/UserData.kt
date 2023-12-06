@@ -11,5 +11,6 @@ data class UserData(
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,
     val languageConfig: LanguageConfig,
-    val recentSearchQueries: List<String>,
+    val recentSearchPhotoQueries: List<String>,
+    val recentSearchVideoQueries: List<String>,
 )

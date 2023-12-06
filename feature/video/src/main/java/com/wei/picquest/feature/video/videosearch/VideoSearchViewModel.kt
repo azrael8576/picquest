@@ -1,4 +1,4 @@
-package com.wei.picquest.feature.photo.photosearch
+package com.wei.picquest.feature.video.videosearch
 
 import androidx.lifecycle.viewModelScope
 import com.wei.picquest.core.base.BaseViewModel
@@ -8,19 +8,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PhotoSearchViewModel @Inject constructor(
+class VideoSearchViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository,
 ) : BaseViewModel<
-    PhotoSearchViewAction,
-    PhotoSearchViewState,
-    >(PhotoSearchViewState()) {
+    VideoSearchViewAction,
+    VideoSearchViewState,
+    >(VideoSearchViewState()) {
 
     init {
         viewModelScope.launch {
             userDataRepository.userData.collect { userData ->
                 updateState {
                     copy(
-                        recentSearchQueries = userData.recentSearchPhotoQueries.asReversed(),
+                        recentSearchQueries = userData.recentSearchVideoQueries.asReversed(),
                     )
                 }
             }
@@ -34,7 +34,7 @@ class PhotoSearchViewModel @Inject constructor(
     private fun searchTriggered(query: String) {
         if (query.isNotBlank()) {
             viewModelScope.launch {
-                userDataRepository.addRecentSearchPhotoQuery(query)
+                userDataRepository.addRecentSearchVideoQuery(query)
             }
         }
         updateState { copy(searchQuery = "") }
@@ -42,16 +42,16 @@ class PhotoSearchViewModel @Inject constructor(
 
     private fun clearRecentSearchQueries() {
         viewModelScope.launch {
-            userDataRepository.clearRecentSearchPhotoQueries()
+            userDataRepository.clearRecentSearchVideoQueries()
         }
     }
 
-    override fun dispatch(action: PhotoSearchViewAction) {
+    override fun dispatch(action: VideoSearchViewAction) {
         when (action) {
-            is PhotoSearchViewAction.SearchQueryChanged -> searchQueryChanged(action.query)
-            is PhotoSearchViewAction.SearchTriggered -> searchTriggered(action.query)
-            is PhotoSearchViewAction.RecentSearchClicked -> searchTriggered(action.query)
-            is PhotoSearchViewAction.ClearRecentSearchQueriesClicked -> clearRecentSearchQueries()
+            is VideoSearchViewAction.SearchQueryChanged -> searchQueryChanged(action.query)
+            is VideoSearchViewAction.SearchTriggered -> searchTriggered(action.query)
+            is VideoSearchViewAction.RecentSearchClicked -> searchTriggered(action.query)
+            is VideoSearchViewAction.ClearRecentSearchQueriesClicked -> clearRecentSearchQueries()
         }
     }
 }
