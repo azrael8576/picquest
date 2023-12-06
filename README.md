@@ -4,9 +4,12 @@
 
 ![Logo](docs/images/logo.png)
 
-"PicQuest" - 融合了「圖片（Pic）」和「探索（Quest）」的概念，用戶可以通過這個應用探索和發現各種圖片。
+"PicQuest" 結合「圖片（Pic）」和「探索（Quest）」的理念，現在不僅讓用戶探索和發現各種圖片，還提供高畫質影片，讓您的探索更加豐富多彩。
 
-並提供列表式佈局（List）與交錯格狀佈局（StaggeredGrid）供用戶選擇。
+選擇您喜愛的方式來體驗：
+
+- 列表式佈局（List）：傳統而簡潔，適合快速瀏覽。
+- 交錯格狀佈局（StaggeredGrid）：創新而動感，為您的探索增添視覺趣味。
 
 ## Screenshots
 
