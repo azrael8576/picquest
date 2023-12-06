@@ -22,6 +22,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -244,6 +245,10 @@ fun VideoPlayer(uri: Uri, previewUrl: String) {
 @Composable
 fun PagingStateHandling(lazyPagingItems: LazyPagingItems<VideoDetail>) {
     lazyPagingItems.apply {
+        when {
+            loadState.refresh is LoadState.Loading -> PageLoader()
+            loadState.refresh is LoadState.Error -> PageLoaderError { retry() }
+        }
         if (itemCount == 0 &&
             loadState.append is LoadState.NotLoading &&
             loadState.append.endOfPaginationReached
@@ -275,6 +280,28 @@ fun NoDataMessage() {
                 style = MaterialTheme.typography.bodyLarge,
             )
         }
+    }
+}
+
+@Composable
+fun PageLoaderError(onClickRetry: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        OutlinedButton(onClick = onClickRetry) {
+            Text(text = stringResource(R.string.retry))
+        }
+    }
+}
+
+@Composable
+fun PageLoader() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        CircularProgressIndicator()
     }
 }
 
