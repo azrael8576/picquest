@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -53,6 +53,8 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.wei.picquest.core.data.model.VideoDetail
 import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.picquest.core.designsystem.icon.PqIcons
@@ -131,10 +133,6 @@ internal fun VideoLibraryScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (withTopSpacer) {
-                Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-            }
-
             val pagerState = rememberPagerState(
                 initialPage = 0,
                 initialPageOffsetFraction = 0f,
@@ -147,15 +145,14 @@ internal fun VideoLibraryScreen(
             ) { page ->
                 val videoDetail = lazyPagingItems[page]
                 videoDetail?.let {
-                    VideoPlayer(uri = it.videos.tiny.url.toUri())
+                    VideoPlayer(
+                        uri = it.videos.tiny.url.toUri(),
+                        previewUrl = "https://i.vimeocdn.com/video/${it.pictureId}_100x75.jpg",
+                    )
                 }
             }
 
             PagingStateHandling(lazyPagingItems)
-
-            if (withBottomSpacer) {
-                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
-            }
         }
     }
 }
@@ -194,7 +191,7 @@ fun BackButton(
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun VideoPlayer(uri: Uri) {
+fun VideoPlayer(uri: Uri, previewUrl: String) {
     val context = LocalContext.current
     val isPlayerReady = remember { mutableStateOf(false) }
 
@@ -239,7 +236,7 @@ fun VideoPlayer(uri: Uri) {
         )
 
         if (!isPlayerReady.value) {
-            LoadingView()
+            LoadingView(previewUrl = previewUrl)
         }
     }
 }
@@ -282,13 +279,29 @@ fun NoDataMessage() {
 }
 
 @Composable
-private fun LoadingView() {
+private fun LoadingView(previewUrl: String) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        CircularProgressIndicator(modifier = Modifier.size(30.dp))
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(previewUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth(),
+            )
+            CircularProgressIndicator(modifier = Modifier.size(30.dp))
+        }
     }
 }
