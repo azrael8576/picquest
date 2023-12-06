@@ -88,10 +88,11 @@ class PqAppStateTest {
             )
         }
 
-        assertThat(state.topLevelDestinations).hasSize(3)
+        assertThat(state.topLevelDestinations).hasSize(4)
         assertThat(state.topLevelDestinations[0].name).ignoringCase().contains("home")
         assertThat(state.topLevelDestinations[1].name).ignoringCase().contains("photo")
-        assertThat(state.topLevelDestinations[2].name).ignoringCase().contains("contact_me")
+        assertThat(state.topLevelDestinations[2].name).ignoringCase().contains("video")
+        assertThat(state.topLevelDestinations[3].name).ignoringCase().contains("contact_me")
     }
 
     @Test
@@ -280,6 +281,7 @@ private fun rememberTestNavController(): TestNavHostController {
                 composable("a") { }
                 composable("b") { }
                 composable("c") { }
+                composable("d") { }
             }
         }
     }

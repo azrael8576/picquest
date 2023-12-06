@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Network representation of [SearchImages] when fetched from /
+ * Network representation of [NetworkSearchImages] when fetched from /
  */
 @Serializable
 data class NetworkSearchImages(

@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.wei.picquest.core.network.PqNetworkDataSource
 import com.wei.picquest.core.network.model.NetworkImageDetail
 
-class PixabayPagingSource(
+class PixabayImagePagingSource(
     private val pqNetworkDataSource: PqNetworkDataSource,
     private val query: String,
 ) : PagingSource<Int, NetworkImageDetail>() {

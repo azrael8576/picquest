@@ -4,6 +4,7 @@
     <string name="photo">Photo</string>
     <string name="home">Home</string>
     <string name="contact_me">Contact Me</string>
+    <string name="video">Video</string>
 
     <!-- Test tag -->
     <string name="tag_pq_bottom_bar" translatable="false">PqBottomBar</string>
