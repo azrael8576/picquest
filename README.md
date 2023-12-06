@@ -4,7 +4,7 @@
 
 ![Logo](docs/images/logo.png)
 
-"PicQuest" 結合「圖片（Pic）」和「探索（Quest）」的理念，現在不僅讓用戶探索和發現各種圖片，還提供高畫質影片，讓您的探索更加豐富多彩。
+"PicQuest" 結合「圖片（Pic）」和「探索（Quest）」的理念，不僅讓用戶探索和發現各種圖片，還提供高畫質影片，讓您的探索更加豐富多彩。
 
 選擇您喜愛的方式來體驗：
 
@@ -14,11 +14,11 @@
 ## Screenshots
 
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo.gif" alt="Demo">  
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-light-landscape.gif" alt="Demo-Light-Landscape">
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-split-screen.gif" alt="Demo-Split-Screen">  
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-dark-portrait.gif" alt="Demo-Dark-Portrait">
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-video.gif" alt="Demo-Video"> 
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-split-screen.gif" alt="Demo-Split-Screen">
 
 
 ## Tech stack
@@ -50,6 +50,9 @@
 
 #### Image Loading
 - [_Coil_](https://coil-kt.github.io/coil/): An image loading library for Android backed by Kotlin Coroutines.
+
+#### Jetpack Media3
+- [_ExoPlayer_](https://developer.android.com/guide/topics/media/media3?hl=en): Jetpack Media3 is the new home for media libraries that enables Android apps to display rich audio and visual experiences.
 
 #### Testing
 - [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
