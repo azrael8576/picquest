@@ -15,7 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PicQuest"
+rootProject.name = "picquest"
 include(":app")
 
 include(":core:designsystem")
