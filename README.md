@@ -11,9 +11,11 @@
 ## Screenshots
 
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo.gif" alt="Demo">
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo.gif" alt="Demo">  
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-split-screen.gif" alt="Demo-Split-Screen">
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-split-screen.gif" alt="Demo-Split-Screen">  
+
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-video.gif" alt="Demo-Video"> 
 
 
 ## Tech stack

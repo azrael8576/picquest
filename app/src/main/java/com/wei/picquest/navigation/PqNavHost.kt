@@ -11,6 +11,7 @@ import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.photo.photolibrary.navigation.photoLibraryGraph
 import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchGraph
 import com.wei.picquest.feature.video.videolibrary.navigation.videoLibraryGraph
+import com.wei.picquest.feature.video.videosearch.navigation.videoSearchGraph
 import com.wei.picquest.ui.PqAppState
 
 /**
@@ -46,8 +47,11 @@ fun PqNavHost(
                 photoLibraryGraph(navController = navController)
             },
         )
-        videoLibraryGraph(
+        videoSearchGraph(
             navController = navController,
+            nestedGraphs = {
+                videoLibraryGraph(navController = navController)
+            },
         )
         contactMeGraph(
             navController = navController,

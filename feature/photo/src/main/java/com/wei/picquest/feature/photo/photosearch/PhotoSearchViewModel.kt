@@ -20,7 +20,7 @@ class PhotoSearchViewModel @Inject constructor(
             userDataRepository.userData.collect { userData ->
                 updateState {
                     copy(
-                        recentSearchQueries = userData.recentSearchQueries.asReversed(),
+                        recentSearchQueries = userData.recentSearchPhotoQueries.asReversed(),
                     )
                 }
             }
@@ -34,7 +34,7 @@ class PhotoSearchViewModel @Inject constructor(
     private fun searchTriggered(query: String) {
         if (query.isNotBlank()) {
             viewModelScope.launch {
-                userDataRepository.addRecentSearchQuery(query)
+                userDataRepository.addRecentSearchPhotoQuery(query)
             }
         }
         updateState { copy(searchQuery = "") }
@@ -42,7 +42,7 @@ class PhotoSearchViewModel @Inject constructor(
 
     private fun clearRecentSearchQueries() {
         viewModelScope.launch {
-            userDataRepository.clearRecentSearchQueries()
+            userDataRepository.clearRecentSearchPhotoQueries()
         }
     }
 

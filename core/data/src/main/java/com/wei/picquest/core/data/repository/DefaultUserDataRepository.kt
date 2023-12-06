@@ -15,11 +15,19 @@ class DefaultUserDataRepository @Inject constructor(
         paPreferencesDataSource.setTokenString(tokenString)
     }
 
-    override suspend fun addRecentSearchQuery(newQuery: String) {
-        paPreferencesDataSource.addRecentSearchQuery(newQuery)
+    override suspend fun addRecentSearchPhotoQuery(newQuery: String) {
+        paPreferencesDataSource.addRecentSearchPhotoQuery(newQuery)
     }
 
-    override suspend fun clearRecentSearchQueries() {
-        paPreferencesDataSource.clearRecentSearchQueries()
+    override suspend fun addRecentSearchVideoQuery(newQuery: String) {
+        paPreferencesDataSource.addRecentSearchVideoQuery(newQuery)
+    }
+
+    override suspend fun clearRecentSearchPhotoQueries() {
+        paPreferencesDataSource.clearRecentSearchPhotoQueries()
+    }
+
+    override suspend fun clearRecentSearchVideoQueries() {
+        paPreferencesDataSource.clearRecentSearchVideoQueries()
     }
 }

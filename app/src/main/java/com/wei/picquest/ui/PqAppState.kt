@@ -31,8 +31,8 @@ import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.home.home.navigation.navigateToHome
 import com.wei.picquest.feature.photo.photosearch.navigation.navigateToPhotoSearch
 import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchRoute
-import com.wei.picquest.feature.video.videolibrary.navigation.navigateToVideoLibrary
-import com.wei.picquest.feature.video.videolibrary.navigation.videoLibraryRoute
+import com.wei.picquest.feature.video.videosearch.navigation.navigateToVideoSearch
+import com.wei.picquest.feature.video.videosearch.navigation.videoSearchRoute
 import com.wei.picquest.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -156,7 +156,7 @@ class PqAppState(
         @Composable get() = when (currentDestination?.route) {
             homeRoute -> TopLevelDestination.HOME
             photoSearchRoute -> TopLevelDestination.PHOTO
-            videoLibraryRoute -> TopLevelDestination.VIDEO
+            videoSearchRoute -> TopLevelDestination.VIDEO
             contactMeRoute -> TopLevelDestination.CONTACT_ME
             else -> null
         }
@@ -209,7 +209,7 @@ class PqAppState(
                     topLevelNavOptions,
                 )
 
-                TopLevelDestination.VIDEO -> navController.navigateToVideoLibrary(
+                TopLevelDestination.VIDEO -> navController.navigateToVideoSearch(
                     topLevelNavOptions,
                 )
 

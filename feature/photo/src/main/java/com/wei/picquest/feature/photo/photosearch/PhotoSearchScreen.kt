@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -297,14 +296,15 @@ private fun SearchTextField(
         maxLines = 1,
         singleLine = true,
     )
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+    // TODO move to ViewModel
+//    LaunchedEffect(Unit) {
+//        focusRequester.requestFocus()
+//    }
 }
 
 @ThemePreviews
 @Composable
-fun SearchPhotoScreenPreview() {
+fun PhotoSearchScreenPreview() {
     PqTheme {
         PhotoSearchScreen(
             uiStates = PhotoSearchViewState(

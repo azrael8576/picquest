@@ -19,7 +19,8 @@ message UserPreferences {
   ThemeBrandProto theme_brand = 5;   // Specifies the brand theme the user has chosen
   DarkThemeConfigProto dark_theme_config = 6;   // User's preference for dark theme mode
   LanguageConfigProto language_config = 7;      // Language preferred by the user for the app interface
-  repeated string recent_search_queries = 8;    // List of user's recent search queries
+  repeated string recent_search_photo_queries = 8;    // List of user's recent search photo queries
+  repeated string recent_search_video_queries = 9;    // List of user's recent search video queries
 
-  // NEXT AVAILABLE ID: 9
+  // NEXT AVAILABLE ID: 10
 }

@@ -16,12 +16,22 @@ interface UserDataRepository {
     suspend fun setTokenString(tokenString: String)
 
     /**
-     * Adds a new search query to the user's recent search queries.
+     * Adds a new search query to the user's recent search photo queries.
      */
-    suspend fun addRecentSearchQuery(newQuery: String)
+    suspend fun addRecentSearchPhotoQuery(newQuery: String)
 
     /**
-     * Clears all the user's recent search queries.
+     * Adds a new search query to the user's recent search video queries.
      */
-    suspend fun clearRecentSearchQueries()
+    suspend fun addRecentSearchVideoQuery(newQuery: String)
+
+    /**
+     * Clears all the user's recent search photo queries.
+     */
+    suspend fun clearRecentSearchPhotoQueries()
+
+    /**
+     * Clears all the user's recent search video queries.
+     */
+    suspend fun clearRecentSearchVideoQueries()
 }
