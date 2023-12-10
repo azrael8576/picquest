@@ -78,12 +78,11 @@ dependencies {
     implementation(project(":core:datastore"))
 
     androidTestImplementation(project(":core:designsystem"))
-    // TODO Wei
-//    androidTestImplementation(project(":core:datastore-test"))
+    androidTestImplementation(project(":core:datastore-test"))
     androidTestImplementation(project(":core:testing"))
     androidTestImplementation(libs.androidx.navigation.testing)
     androidTestImplementation(libs.accompanist.testharness)
-//    testImplementation(project(":core:datastore-test"))
+    testImplementation(project(":core:datastore-test"))
     testImplementation(project(":core:testing"))
     testImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.accompanist.testharness)
