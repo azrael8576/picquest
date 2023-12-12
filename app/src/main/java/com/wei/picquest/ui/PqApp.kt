@@ -119,23 +119,27 @@ fun PqApp(
                 SnackbarHost(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
-                        if (!appState.isFullScreenCurrentDestination) {
-                            val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
-                            PqAppSnackbar(snackbarData, isError)
+                        if (!appState.isInPictureInPicture) {
+                            if (!appState.isFullScreenCurrentDestination) {
+                                val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                                PqAppSnackbar(snackbarData, isError)
+                            }
                         }
                     },
                 )
             },
             bottomBar = {
-                if (!appState.isFullScreenCurrentDestination &&
-                    appState.navigationType == PqNavigationType.BOTTOM_NAVIGATION
-                ) {
-                    PqBottomBar(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination,
-                        modifier = Modifier.testTag(pqBottomBar),
-                    )
+                if (!appState.isInPictureInPicture) {
+                    if (!appState.isFullScreenCurrentDestination &&
+                        appState.navigationType == PqNavigationType.BOTTOM_NAVIGATION
+                    ) {
+                        PqBottomBar(
+                            destinations = appState.topLevelDestinations,
+                            onNavigateToDestination = appState::navigateToTopLevelDestination,
+                            currentDestination = appState.currentDestination,
+                            modifier = Modifier.testTag(pqBottomBar),
+                        )
+                    }
                 }
             },
         ) { padding ->
@@ -150,31 +154,35 @@ fun PqApp(
                         ),
                     ),
             ) {
-                if (!appState.isFullScreenCurrentDestination &&
-                    appState.navigationType == PqNavigationType.PERMANENT_NAVIGATION_DRAWER
-                ) {
-                    PqNavDrawer(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination,
-                        modifier = Modifier
-                            .testTag(pqNavDrawer)
-                            .padding(SPACING_LARGE.dp)
-                            .safeDrawingPadding(),
-                    )
+                if (!appState.isInPictureInPicture) {
+                    if (!appState.isFullScreenCurrentDestination &&
+                        appState.navigationType == PqNavigationType.PERMANENT_NAVIGATION_DRAWER
+                    ) {
+                        PqNavDrawer(
+                            destinations = appState.topLevelDestinations,
+                            onNavigateToDestination = appState::navigateToTopLevelDestination,
+                            currentDestination = appState.currentDestination,
+                            modifier = Modifier
+                                .testTag(pqNavDrawer)
+                                .padding(SPACING_LARGE.dp)
+                                .safeDrawingPadding(),
+                        )
+                    }
                 }
 
-                if (!appState.isFullScreenCurrentDestination &&
-                    appState.navigationType == PqNavigationType.NAVIGATION_RAIL
-                ) {
-                    PqNavRail(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination,
-                        modifier = Modifier
-                            .testTag(pqNavRail)
-                            .safeDrawingPadding(),
-                    )
+                if (!appState.isInPictureInPicture) {
+                    if (!appState.isFullScreenCurrentDestination &&
+                        appState.navigationType == PqNavigationType.NAVIGATION_RAIL
+                    ) {
+                        PqNavRail(
+                            destinations = appState.topLevelDestinations,
+                            onNavigateToDestination = appState::navigateToTopLevelDestination,
+                            currentDestination = appState.currentDestination,
+                            modifier = Modifier
+                                .testTag(pqNavRail)
+                                .safeDrawingPadding(),
+                        )
+                    }
                 }
 
                 Column(
