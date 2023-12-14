@@ -1,6 +1,7 @@
 package com.wei.picquest.feature.video.videolibrary.navigation
 
 import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -37,6 +38,7 @@ fun NavController.navigateToVideoLibrary(videoSearchQuery: String) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.videoLibraryGraph(
     navController: NavController,
 ) {

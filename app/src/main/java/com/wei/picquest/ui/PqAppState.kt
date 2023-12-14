@@ -8,6 +8,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -25,6 +26,7 @@ import com.wei.picquest.core.designsystem.ui.PqNavigationType
 import com.wei.picquest.core.designsystem.ui.currentDeviceOrientation
 import com.wei.picquest.core.designsystem.ui.isBookPosture
 import com.wei.picquest.core.designsystem.ui.isSeparating
+import com.wei.picquest.core.pip.isInPictureInPictureMode
 import com.wei.picquest.feature.contactme.contactme.navigation.contactMeRoute
 import com.wei.picquest.feature.contactme.contactme.navigation.navigateToContactMe
 import com.wei.picquest.feature.home.home.navigation.homeRoute
@@ -151,6 +153,9 @@ class PqAppState(
             null -> true
             else -> false
         }
+
+    val isInPictureInPicture: Boolean
+        @Composable get() = LocalContext.current.isInPictureInPictureMode
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {

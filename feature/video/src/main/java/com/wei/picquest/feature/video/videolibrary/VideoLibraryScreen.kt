@@ -1,6 +1,7 @@
 package com.wei.picquest.feature.video.videolibrary
 
-import android.net.Uri
+import android.content.Context
+import android.graphics.Rect
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -27,11 +29,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -57,10 +62,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.wei.picquest.core.data.model.VideoDetail
-import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.picquest.core.designsystem.icon.PqIcons
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
+import com.wei.picquest.core.pip.enterPictureInPicture
+import com.wei.picquest.core.pip.isInPictureInPictureMode
+import com.wei.picquest.core.pip.updatedPipParams
 import com.wei.picquest.feature.video.R
 
 /**
@@ -92,69 +99,77 @@ import com.wei.picquest.feature.video.R
  *
  *
  */
+@ExperimentalFoundationApi
 @Composable
 internal fun VideoLibraryRoute(
     navController: NavController,
     viewModel: VideoLibraryViewModel = hiltViewModel(),
 ) {
     val lazyPagingItems = viewModel.videosState.collectAsLazyPagingItems()
+    val isInPiPMode = LocalContext.current.isInPictureInPictureMode
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Box {
-            VideoLibraryScreen(lazyPagingItems)
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f,
+        pageCount = { lazyPagingItems.itemCount },
+    )
 
-            TopBarActions(
-                onBackClick = navController::popBackStack,
-            )
-        }
-    }
+    VideoLibraryScreen(
+        lazyPagingItems = lazyPagingItems,
+        pagerState = pagerState,
+        isInPiPMode = isInPiPMode,
+        onBackClick = navController::popBackStack,
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun VideoLibraryScreen(
     lazyPagingItems: LazyPagingItems<VideoDetail>,
+    pagerState: PagerState,
+    isInPiPMode: Boolean = false,
+    onBackClick: () -> Unit,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
 ) {
-    val showPopup = remember { mutableStateOf(false) }
-
-    if (showPopup.value) {
-        FunctionalityNotAvailablePopup(
-            onDismiss = {
-                showPopup.value = false
-            },
-        )
-    }
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val pagerState = rememberPagerState(
-                initialPage = 0,
-                initialPageOffsetFraction = 0f,
-                pageCount = { lazyPagingItems.itemCount },
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Box {
+            VideoPager(
+                lazyPagingItems = lazyPagingItems,
+                pagerState = pagerState,
             )
 
-            VerticalPager(
-                state = pagerState,
-                modifier = Modifier.weight(1f),
-            ) { page ->
-                val videoDetail = lazyPagingItems[page]
-                videoDetail?.let {
-                    VideoPlayer(
-                        uri = it.videos.tiny.url.toUri(),
-                        previewUrl = "https://i.vimeocdn.com/video/${it.pictureId}_100x75.jpg",
-                    )
-                }
+            if (!isInPiPMode) {
+                TopBarActions(onBackClick = onBackClick)
             }
-
-            PagingStateHandling(lazyPagingItems)
         }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun VideoPager(
+    lazyPagingItems: LazyPagingItems<VideoDetail>,
+    pagerState: PagerState,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        VerticalPager(
+            state = pagerState,
+            modifier = Modifier.weight(1f),
+        ) { page ->
+            val videoDetail = lazyPagingItems[page]
+
+            videoDetail?.let {
+                VideoPlayer(
+                    videoDetail = videoDetail,
+                    isCurrentPage = pagerState.currentPage == page,
+                )
+            }
+        }
+
+        PagingStateHandling(lazyPagingItems = lazyPagingItems)
     }
 }
 
@@ -192,11 +207,58 @@ fun BackButton(
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun VideoPlayer(uri: Uri, previewUrl: String) {
-    val context = LocalContext.current
-    val isPlayerReady = remember { mutableStateOf(false) }
+fun VideoPlayer(
+    videoDetail: VideoDetail,
+    isCurrentPage: Boolean,
+) {
+    if (!isCurrentPage) return
 
-    val exoPlayer = remember(uri) {
+    val context = LocalContext.current
+    val isInPiPMode = context.isInPictureInPictureMode
+    val isPlayerReady = remember { mutableStateOf(false) }
+    val playerViewBounds = remember { mutableStateOf<Rect?>(null) }
+
+    val exoPlayer = rememberExoPlayer(
+        context = context,
+        videoDetail = videoDetail,
+        isPlayerReady = isPlayerReady,
+        playerViewBounds = playerViewBounds,
+    )
+
+    DisposableEffect(videoDetail.id) {
+        onDispose { exoPlayer.release() }
+    }
+
+    Box {
+        PlayerViewContainer(
+            exoPlayer = exoPlayer,
+            isPlayerReady = isPlayerReady,
+            playerViewBounds = playerViewBounds,
+        )
+
+        if (!isInPiPMode) {
+            PiPButtonLayout(context = context)
+        }
+
+        if (!isPlayerReady.value) {
+            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_100x75.jpg"
+            LoadingView(previewUrl = previewUrl)
+        }
+    }
+}
+
+@androidx.annotation.OptIn(UnstableApi::class)
+@Composable
+fun rememberExoPlayer(
+    context: Context,
+    videoDetail: VideoDetail,
+    isPlayerReady: MutableState<Boolean>,
+    playerViewBounds: MutableState<Rect?>,
+): ExoPlayer {
+    val uri = videoDetail.videos.tiny.url.toUri()
+    val mediaItem = MediaItem.Builder().setUri(uri).setMediaId(videoDetail.id.toString()).build()
+
+    return remember(videoDetail.id) {
         ExoPlayer.Builder(context).build().apply {
             playWhenReady = true
             videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
@@ -205,6 +267,9 @@ fun VideoPlayer(uri: Uri, previewUrl: String) {
             addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(state: Int) {
                     isPlayerReady.value = (state == Player.STATE_READY)
+                    playerViewBounds.value?.let { bounds ->
+                        calculateAndSetPiPParams(context, bounds, videoDetail)
+                    }
                 }
             })
 
@@ -216,30 +281,105 @@ fun VideoPlayer(uri: Uri, previewUrl: String) {
             prepare()
         }
     }
+}
 
-    DisposableEffect(uri) {
-        onDispose {
-            exoPlayer.release()
-        }
-    }
-
-    Box {
-        AndroidView(
-            factory = {
-                PlayerView(it).apply {
-                    useController = false
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                    player = exoPlayer
-                    alpha = if (isPlayerReady.value) 0f else 1f
-                }
+@androidx.annotation.OptIn(UnstableApi::class)
+@Composable
+fun PlayerViewContainer(
+    exoPlayer: ExoPlayer,
+    isPlayerReady: MutableState<Boolean>,
+    playerViewBounds: MutableState<Rect?>,
+) {
+    AndroidView(
+        factory = {
+            PlayerView(it).apply {
+                useController = false
+                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                player = exoPlayer
+                alpha = if (isPlayerReady.value) 0f else 1f
+            }
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .onGloballyPositioned { layoutCoordinates ->
+                playerViewBounds.value = layoutCoordinates
+                    .boundsInWindow()
+                    .toAndroidGraphicsRect()
             },
-            modifier = Modifier.fillMaxSize(),
-        )
+    )
+}
 
-        if (!isPlayerReady.value) {
-            LoadingView(previewUrl = previewUrl)
+@Composable
+fun PiPButtonLayout(context: Context) {
+    Column {
+        Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+        Row(modifier = Modifier.padding(SPACING_MEDIUM.dp)) {
+            Spacer(modifier = Modifier.weight(1f))
+            PiPButton(
+                onPipClick = {
+                    enterPictureInPicture(
+                        context = context,
+                    )
+                },
+            )
         }
     }
+}
+
+@Composable
+fun PiPButton(
+    onPipClick: () -> Unit,
+) {
+    IconButton(
+        onClick = { onPipClick() },
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .semantics { contentDescription = "PictureInPicture" },
+    ) {
+        Icon(
+            imageVector = PqIcons.PictureInPicture,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+        )
+    }
+}
+
+fun androidx.compose.ui.geometry.Rect.toAndroidGraphicsRect(): android.graphics.Rect {
+    return android.graphics.Rect(
+        left.toInt(),
+        top.toInt(),
+        right.toInt(),
+        bottom.toInt(),
+    )
+}
+
+fun calculateAndSetPiPParams(context: Context, viewBounds: Rect, videoDetail: VideoDetail) {
+    val videoDetailWidth = videoDetail.videos.tiny.width
+    val videoDetailHeight = videoDetail.videos.tiny.height
+    val videoAspectRatio = videoDetailWidth.toFloat() / videoDetailHeight.toFloat()
+
+    val finalWidth: Float
+    val finalHeight: Float
+    if (videoAspectRatio > viewBounds.width().toFloat() / viewBounds.height().toFloat()) {
+        finalWidth = viewBounds.width().toFloat()
+        finalHeight = finalWidth / videoAspectRatio
+    } else {
+        finalHeight = viewBounds.height().toFloat()
+        finalWidth = finalHeight * videoAspectRatio
+    }
+
+    val offsetX = (viewBounds.width() - finalWidth) / 2
+    val offsetY = (viewBounds.height() - finalHeight) / 2
+
+    val rect = Rect(
+        (viewBounds.left + offsetX).toInt(),
+        (viewBounds.top + offsetY).toInt(),
+        (viewBounds.left + offsetX + finalWidth).toInt(),
+        (viewBounds.top + offsetY + finalHeight).toInt(),
+    )
+
+    updatedPipParams(context, rect)
 }
 
 @Composable
@@ -325,8 +465,7 @@ private fun LoadingView(previewUrl: String) {
                     .crossfade(true)
                     .build(),
                 contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
             )
             CircularProgressIndicator(modifier = Modifier.size(30.dp))
         }
