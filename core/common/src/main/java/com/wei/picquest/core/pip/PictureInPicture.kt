@@ -18,9 +18,11 @@ fun updatedPipParams(
     val aspect = Rational(rect.width(), rect.height())
     val paramsBuilder = PictureInPictureParams.Builder()
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        paramsBuilder.setAspectRatio(aspect)
-        paramsBuilder.setSourceRectHint(rect)
+    if (aspect.toFloat() in 0.418410..2.390000) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            paramsBuilder.setAspectRatio(aspect)
+            paramsBuilder.setSourceRectHint(rect)
+        }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         paramsBuilder.setSeamlessResizeEnabled(true)
