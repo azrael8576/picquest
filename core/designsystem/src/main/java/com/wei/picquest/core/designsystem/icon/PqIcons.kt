@@ -21,6 +21,7 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.PhotoLibrary
+import androidx.compose.material.icons.rounded.PictureInPicture
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
@@ -59,4 +60,5 @@ object PqIcons {
     val Add = Icons.Rounded.Add
     val ListView = Icons.Rounded.List
     val GridView = Icons.Rounded.GridView
+    val PictureInPicture = Icons.Rounded.PictureInPicture
 }
