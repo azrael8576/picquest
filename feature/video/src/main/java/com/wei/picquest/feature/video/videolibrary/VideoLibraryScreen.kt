@@ -231,7 +231,7 @@ fun VideoPlayer(
         }
 
         if (!isPlayerReady.value || !isCurrentPage) {
-            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_100x75.jpg"
+            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_295x166.jpg"
             LoadingView(previewUrl = previewUrl)
         }
     }
