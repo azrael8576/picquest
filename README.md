@@ -18,7 +18,7 @@
 
 <img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-dark-portrait.gif" alt="Demo-Dark-Portrait">
 
-<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-split-screen.gif" alt="Demo-Split-Screen">
+<img src="https://github.com/azrael8576/picquest/blob/main/docs/demo/demo-pip.gif" alt="Demo-Picture-in-Picture(PiP)">
 
 
 ## Tech stack
