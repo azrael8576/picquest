@@ -211,37 +211,27 @@ fun VideoPlayer(
     videoDetail: VideoDetail,
     isCurrentPage: Boolean,
 ) {
-    if (!isCurrentPage) return
-
     val context = LocalContext.current
     val isInPiPMode = context.isInPictureInPictureMode
     val isPlayerReady = remember { mutableStateOf(false) }
-    val playerViewBounds = remember { mutableStateOf<Rect?>(null) }
 
-    val exoPlayer = rememberExoPlayer(
-        context = context,
-        videoDetail = videoDetail,
-        isPlayerReady = isPlayerReady,
-        playerViewBounds = playerViewBounds,
-    )
+    Box(
+        Modifier.background(MaterialTheme.colorScheme.background),
+    ) {
+        if (isCurrentPage) {
+            PlayerViewContainer(
+                context = context,
+                videoDetail = videoDetail,
+                isPlayerReady = isPlayerReady,
+            )
 
-    DisposableEffect(videoDetail.id) {
-        onDispose { exoPlayer.release() }
-    }
-
-    Box {
-        PlayerViewContainer(
-            exoPlayer = exoPlayer,
-            isPlayerReady = isPlayerReady,
-            playerViewBounds = playerViewBounds,
-        )
-
-        if (!isInPiPMode) {
-            PiPButtonLayout(context = context)
+            if (!isInPiPMode) {
+                PiPButtonLayout(context = context)
+            }
         }
 
-        if (!isPlayerReady.value) {
-            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_100x75.jpg"
+        if (!isPlayerReady.value || !isCurrentPage) {
+            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_295x166.jpg"
             LoadingView(previewUrl = previewUrl)
         }
     }
@@ -286,21 +276,33 @@ fun rememberExoPlayer(
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 fun PlayerViewContainer(
-    exoPlayer: ExoPlayer,
+    context: Context,
+    videoDetail: VideoDetail,
     isPlayerReady: MutableState<Boolean>,
-    playerViewBounds: MutableState<Rect?>,
 ) {
+    val playerViewBounds = remember { mutableStateOf<Rect?>(null) }
+    val exoPlayer = rememberExoPlayer(
+        context = context,
+        videoDetail = videoDetail,
+        isPlayerReady = isPlayerReady,
+        playerViewBounds = playerViewBounds,
+    )
+
+    DisposableEffect(videoDetail.id) {
+        onDispose { exoPlayer.release() }
+    }
+
     AndroidView(
         factory = {
             PlayerView(it).apply {
                 useController = false
                 resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
                 player = exoPlayer
-                alpha = if (isPlayerReady.value) 0f else 1f
             }
         },
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .onGloballyPositioned { layoutCoordinates ->
                 playerViewBounds.value = layoutCoordinates
                     .boundsInWindow()
