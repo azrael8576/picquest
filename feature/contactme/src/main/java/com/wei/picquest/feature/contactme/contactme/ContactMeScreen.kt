@@ -428,6 +428,7 @@ fun ContactMeScreenDualPanePreview() {
             uiStates = previewUIState,
             contentType = PqContentType.DUAL_PANE,
             displayFeatures = emptyList<DisplayFeature>(),
+            isPreview = true,
             onPhoneClick = { },
         )
     }
