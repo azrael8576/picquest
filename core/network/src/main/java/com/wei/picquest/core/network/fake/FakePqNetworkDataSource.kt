@@ -20,10 +20,16 @@ class FakePqNetworkDataSource(
 ) : PqNetworkDataSource {
 
     private var shouldReturnErrorForImages = false
+    private var shouldReturnErrorForVideos = false
 
     @VisibleForTesting
     fun setReturnErrorForImages(shouldReturnError: Boolean) {
         shouldReturnErrorForImages = shouldReturnError
+    }
+
+    @VisibleForTesting
+    fun setReturnErrorForVideos(shouldReturnError: Boolean) {
+        shouldReturnErrorForVideos = shouldReturnError
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -44,13 +50,22 @@ class FakePqNetworkDataSource(
     @OptIn(ExperimentalSerializationApi::class)
     override suspend fun searchVideos(query: String, page: Int, perPage: Int): NetworkSearchVideos =
         withContext(ioDispatcher) {
-            assets.open(VIDEOS_PAGE_END_ASSET).use(networkJson::decodeFromStream)
+            if (shouldReturnErrorForVideos) {
+                throw Exception("Fake exception for images")
+            }
+            when (page) {
+                0 -> assets.open(VIDEOS_PAGE1_ASSET).use(networkJson::decodeFromStream)
+                else -> {
+                    assets.open(VIDEOS_PAGE_END_ASSET).use(networkJson::decodeFromStream)
+                }
+            }
         }
 
     companion object {
         private const val IMAGES_PAGE1_ASSET = "images_page1.json"
         private const val IMAGES_PAGE2_ASSET = "images_page2.json"
         private const val IMAGES_PAGE_END_ASSET = "images_page_end.json"
+        private const val VIDEOS_PAGE1_ASSET = "videos_page1.json"
         private const val VIDEOS_PAGE_END_ASSET = "videos_page_end.json"
     }
 }
