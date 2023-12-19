@@ -30,7 +30,7 @@ interface RetrofitPixabayApi {
         @Query("q") query: String,
         @Query("image_type") imageType: String = "photo",
         @Query("page") page: Int,
-        @Query("perPage") perPage: Int,
+        @Query("per_page") perPage: Int,
         // Add more parameters as needed
     ): NetworkSearchImages
 
@@ -43,7 +43,7 @@ interface RetrofitPixabayApi {
         @Query("q") query: String,
         @Query("video_type") videoType: String = "film",
         @Query("page") page: Int,
-        @Query("perPage") perPage: Int,
+        @Query("per_page") perPage: Int,
         // Add more parameters as needed
     ): NetworkSearchVideos
 }
