@@ -1,4 +1,4 @@
-package com.wei.picquest.core.data.pagingsource
+package com.wei.picquest.core.network.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

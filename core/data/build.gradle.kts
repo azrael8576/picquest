@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.pq.android.library)
     alias(libs.plugins.pq.android.hilt)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -18,4 +19,6 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:model"))
     implementation(project(":core:datastore"))
+
+    implementation(libs.kotlinx.serialization.json)
 }

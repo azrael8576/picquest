@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.wei.picquest.core.data.model.VideoDetail
 import com.wei.picquest.core.data.model.asExternalModel
-import com.wei.picquest.core.data.pagingsource.PixabayVideoPagingSource
 import com.wei.picquest.core.network.PqNetworkDataSource
+import com.wei.picquest.core.network.pagingsource.PixabayVideoPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
