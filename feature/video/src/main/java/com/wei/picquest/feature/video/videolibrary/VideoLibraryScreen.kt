@@ -3,6 +3,7 @@ package com.wei.picquest.feature.video.videolibrary
 import android.content.Context
 import android.graphics.Rect
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -57,18 +57,25 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.wei.picquest.core.data.model.VideoDetail
+import com.wei.picquest.core.data.model.VideoDetailSize
+import com.wei.picquest.core.data.model.VideoStreams
+import com.wei.picquest.core.designsystem.component.ThemePreviews
+import com.wei.picquest.core.designsystem.component.coilImagePainter
 import com.wei.picquest.core.designsystem.icon.PqIcons
+import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
 import com.wei.picquest.core.pip.enterPictureInPicture
 import com.wei.picquest.core.pip.isInPictureInPictureMode
 import com.wei.picquest.core.pip.updatedPipParams
 import com.wei.picquest.feature.video.R
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  *
@@ -131,12 +138,14 @@ internal fun VideoLibraryScreen(
     onBackClick: () -> Unit,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
+    isPreview: Boolean = false,
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Box {
             VideoPager(
                 lazyPagingItems = lazyPagingItems,
                 pagerState = pagerState,
+                isPreview = isPreview,
             )
 
             if (!isInPiPMode) {
@@ -151,6 +160,7 @@ internal fun VideoLibraryScreen(
 fun VideoPager(
     lazyPagingItems: LazyPagingItems<VideoDetail>,
     pagerState: PagerState,
+    isPreview: Boolean,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -165,6 +175,7 @@ fun VideoPager(
                 VideoPlayer(
                     videoDetail = videoDetail,
                     isCurrentPage = pagerState.currentPage == page,
+                    isPreview = isPreview,
                 )
             }
         }
@@ -210,29 +221,45 @@ fun BackButton(
 fun VideoPlayer(
     videoDetail: VideoDetail,
     isCurrentPage: Boolean,
+    isPreview: Boolean,
 ) {
-    val context = LocalContext.current
-    val isInPiPMode = context.isInPictureInPictureMode
-    val isPlayerReady = remember { mutableStateOf(false) }
-
-    Box(
-        Modifier.background(MaterialTheme.colorScheme.background),
-    ) {
-        if (isCurrentPage) {
-            PlayerViewContainer(
-                context = context,
-                videoDetail = videoDetail,
-                isPlayerReady = isPlayerReady,
+    if (isPreview) {
+        Box(
+            Modifier.background(MaterialTheme.colorScheme.error),
+        ) {
+            LoadingView(isPreview = true)
+            PiPButtonLayout(
+                onPipClick = {},
             )
-
-            if (!isInPiPMode) {
-                PiPButtonLayout(context = context)
-            }
         }
+    } else {
+        val context = LocalContext.current
+        val isInPiPMode = context.isInPictureInPictureMode
+        val isPlayerReady = remember { mutableStateOf(false) }
 
-        if (!isPlayerReady.value || !isCurrentPage) {
-            val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_295x166.jpg"
-            LoadingView(previewUrl = previewUrl)
+        Box(
+            Modifier.background(MaterialTheme.colorScheme.background),
+        ) {
+            if (isCurrentPage) {
+                PlayerViewContainer(
+                    context = context,
+                    videoDetail = videoDetail,
+                    isPlayerReady = isPlayerReady,
+                )
+
+                if (!isInPiPMode) {
+                    PiPButtonLayout(onPipClick = {
+                        enterPictureInPicture(
+                            context = context,
+                        )
+                    })
+                }
+            }
+
+            if (!isPlayerReady.value || !isCurrentPage) {
+                val previewUrl = "https://i.vimeocdn.com/video/${videoDetail.pictureId}_295x166.jpg"
+                LoadingView(previewUrl = previewUrl)
+            }
         }
     }
 }
@@ -312,17 +339,13 @@ fun PlayerViewContainer(
 }
 
 @Composable
-fun PiPButtonLayout(context: Context) {
+fun PiPButtonLayout(onPipClick: () -> Unit) {
     Column {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         Row(modifier = Modifier.padding(SPACING_MEDIUM.dp)) {
             Spacer(modifier = Modifier.weight(1f))
             PiPButton(
-                onPipClick = {
-                    enterPictureInPicture(
-                        context = context,
-                    )
-                },
+                onPipClick = onPipClick,
             )
         }
     }
@@ -448,28 +471,104 @@ fun PageLoader() {
 }
 
 @Composable
-private fun LoadingView(previewUrl: String) {
+private fun LoadingView(
+    previewUrl: String? = "",
+    isPreview: Boolean = false,
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
+        if (isPreview) {
+            val resId = R.drawable.preview_images
+            val painter = coilImagePainter(resId, isPreview)
+            Image(
+                painter = painter,
+                contentDescription = "",
+                modifier = Modifier.fillMaxSize(),
+            )
+        } else {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(previewUrl)
                     .crossfade(true)
                     .build(),
                 contentDescription = "",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(),
             )
-            CircularProgressIndicator(modifier = Modifier.size(30.dp))
         }
+        CircularProgressIndicator(modifier = Modifier.size(30.dp))
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+@ThemePreviews
+@Composable
+fun VideoLibraryScreenPreview() {
+    val pagingData = PagingData.from(fakeVideoDetails)
+    val fakeDataFlow = MutableStateFlow(pagingData)
+    val lazyPagingItems = fakeDataFlow.collectAsLazyPagingItems()
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f,
+        pageCount = { 1 },
+    )
+
+    PqTheme {
+        VideoLibraryScreen(
+            lazyPagingItems = lazyPagingItems,
+            pagerState = pagerState,
+            isInPiPMode = false,
+            onBackClick = {},
+            withTopSpacer = false,
+            withBottomSpacer = false,
+            isPreview = true,
+        )
+    }
+}
+
+val fakeVideoDetails = listOf(
+    VideoDetail(
+        id = 0,
+        pageURL = "",
+        type = "",
+        tags = "",
+        duration = 0,
+        pictureId = "",
+        videos = VideoStreams(
+            large = VideoDetailSize(
+                url = "",
+                width = 0,
+                height = 0,
+                size = 0,
+            ),
+            medium = VideoDetailSize(
+                url = "",
+                width = 0,
+                height = 0,
+                size = 0,
+            ),
+            small = VideoDetailSize(
+                url = "",
+                width = 0,
+                height = 0,
+                size = 0,
+            ),
+            tiny = VideoDetailSize(
+                url = "",
+                width = 0,
+                height = 0,
+                size = 0,
+            ),
+        ),
+        views = 0,
+        downloads = 0,
+        likes = 0,
+        comments = 0,
+        userId = 0,
+        user = "",
+        userImageURL = "",
+    ),
+)
