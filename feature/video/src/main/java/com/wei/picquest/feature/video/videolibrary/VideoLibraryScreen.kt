@@ -29,6 +29,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,7 +76,9 @@ import com.wei.picquest.core.pip.enterPictureInPicture
 import com.wei.picquest.core.pip.isInPictureInPictureMode
 import com.wei.picquest.core.pip.updatedPipParams
 import com.wei.picquest.feature.video.R
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.wei.picquest.feature.video.videolibrary.appendText as appendText
 
 /**
  *
@@ -188,6 +191,9 @@ fun VideoPager(
 fun TopBarActions(
     onBackClick: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        appendText()
+    }
     Column {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         Row(modifier = Modifier.padding(SPACING_MEDIUM.dp)) {
@@ -195,6 +201,19 @@ fun TopBarActions(
             Spacer(modifier = Modifier.weight(1f))
         }
     }
+}
+
+/**
+ * This demo memory churn
+ */
+suspend fun appendText() {
+    var str = ""
+    repeat(10000) {
+        // 使用字串符 + 拼接會 new 對象
+        str += it
+    }
+
+    delay(100)
 }
 
 @Composable
