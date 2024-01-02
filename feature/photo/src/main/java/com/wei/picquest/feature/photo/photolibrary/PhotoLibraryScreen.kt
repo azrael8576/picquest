@@ -43,23 +43,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.wei.picquest.core.data.model.ImageDetail
+import com.wei.picquest.core.designsystem.component.coilImagePainter
 import com.wei.picquest.core.designsystem.icon.PqIcons
+import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
 import com.wei.picquest.feature.photo.R
 import com.wei.picquest.feature.photo.photolibrary.component.LayoutSwitchWarningDialog
+import com.wei.picquest.feature.photo.photolibrary.data.fake.fakeImageDetails
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  *
@@ -190,6 +196,7 @@ fun SwitchLayoutButton(
 @Composable
 fun PhotoLibraryListScreen(
     lazyPagingItems: LazyPagingItems<ImageDetail>,
+    isPreview: Boolean = false,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
 ) {
@@ -202,6 +209,7 @@ fun PhotoLibraryListScreen(
                             ImageDetailItem(
                                 layoutType = LayoutType.LIST,
                                 imageDetail = it,
+                                isPreview = isPreview,
                             )
                         }
                     }
@@ -220,6 +228,7 @@ fun PhotoLibraryGridScreen(
     lazyPagingItems: LazyPagingItems<ImageDetail>,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
+    isPreview: Boolean = false,
 ) {
     Surface {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -238,6 +247,7 @@ fun PhotoLibraryGridScreen(
                             ImageDetailItem(
                                 layoutType = LayoutType.GRID,
                                 imageDetail = it,
+                                isPreview = isPreview,
                             )
                         }
                     }
@@ -256,8 +266,14 @@ fun PhotoLibraryGridScreen(
 fun ImageDetailItem(
     layoutType: LayoutType,
     imageDetail: ImageDetail,
+    isPreview: Boolean,
 ) {
     val imageAspectRatio = imageDetail.aspectRatio
+
+    if (isPreview) {
+        PreviewImageDetailItem(imageAspectRatio = imageAspectRatio)
+        return
+    }
 
     SubcomposeAsyncImage(
         model = imageDetail.webformatURL,
@@ -290,6 +306,27 @@ fun ImageDetailItem(
                 SubcomposeAsyncImageContent()
             }
         }
+    }
+}
+
+@Composable
+fun PreviewImageDetailItem(
+    imageAspectRatio: Float,
+) {
+    val resId =
+        if (imageAspectRatio > 1) R.drawable.preview_portrait_images else R.drawable.preview_land_images
+    val painter = coilImagePainter(resId, true)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(imageAspectRatio),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painter,
+            contentDescription = "",
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }
 
@@ -385,5 +422,35 @@ fun LoadingNextPageItem(modifier: Modifier = Modifier) {
             .padding(SPACING_LARGE.dp),
     ) {
         CircularProgressIndicator(modifier = Modifier.size(30.dp))
+    }
+}
+
+@Preview
+@Composable
+fun PhotoLibraryListScreenPreview() {
+    val pagingData = PagingData.from(fakeImageDetails)
+    val fakeDataFlow = MutableStateFlow(pagingData)
+    val lazyPagingItems = fakeDataFlow.collectAsLazyPagingItems()
+
+    PqTheme {
+        PhotoLibraryListScreen(
+            lazyPagingItems = lazyPagingItems,
+            isPreview = true,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PhotoLibraryGridScreenPreview() {
+    val pagingData = PagingData.from(fakeImageDetails)
+    val fakeDataFlow = MutableStateFlow(pagingData)
+    val lazyPagingItems = fakeDataFlow.collectAsLazyPagingItems()
+
+    PqTheme {
+        PhotoLibraryGridScreen(
+            lazyPagingItems = lazyPagingItems,
+            isPreview = true,
+        )
     }
 }
