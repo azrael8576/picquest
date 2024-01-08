@@ -42,7 +42,7 @@ roborazzi = "1.9.0-alpha-2"
 paging = "3.2.1"
 pagingCompose = "3.3.0-alpha02"
 media = "1.2.0"
-leakcanary = "2.12"
+leakcanary = "2.13"
 
 [libraries]
 
