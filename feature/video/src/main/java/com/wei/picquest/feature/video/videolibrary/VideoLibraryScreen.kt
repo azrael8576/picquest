@@ -151,6 +151,8 @@ internal fun VideoLibraryScreen(
                 isPreview = isPreview,
             )
 
+            PagingStateHandling(lazyPagingItems = lazyPagingItems)
+
             if (!isInPiPMode) {
                 TopBarActions(onBackClick = onBackClick)
             }
@@ -182,8 +184,6 @@ fun VideoPager(
                 )
             }
         }
-
-        PagingStateHandling(lazyPagingItems = lazyPagingItems)
     }
 }
 

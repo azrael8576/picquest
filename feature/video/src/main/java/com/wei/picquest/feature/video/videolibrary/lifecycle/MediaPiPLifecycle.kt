@@ -22,7 +22,7 @@ import kotlinx.coroutines.delay
  *
  * - The ExoPlayer will start playback (`play()`) when the lifecycle event is `ON_RESUME`.
  * - The ExoPlayer will pause playback (`pause()`) when the lifecycle event is `ON_STOP`, which
- *   includes scenarios such as when the application goes into the background or enters Picture-In-Picture mode.
+ *   includes scenarios such as when the application goes into the background.
  *
  * This lifecycle-aware management ensures that video playback is handled efficiently, respecting
  * the application's current state and reducing resource usage when the app is not in the foreground.
@@ -51,7 +51,6 @@ internal fun MediaPiPLifecycle(
 
     if (latestLifecycleEvent == Lifecycle.Event.ON_RESUME) {
         LaunchedEffect(latestLifecycleEvent) {
-            delay(pipEnteringDuration)
             exoPlayer.play()
         }
     }
