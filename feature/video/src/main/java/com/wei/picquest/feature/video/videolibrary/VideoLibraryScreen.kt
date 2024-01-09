@@ -32,6 +32,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -115,10 +116,11 @@ internal fun VideoLibraryRoute(
     val lazyPagingItems = viewModel.videosState.collectAsLazyPagingItems()
     val isInPiPMode = LocalContext.current.isInPictureInPictureMode
 
+    val countState = rememberUpdatedState(newValue = lazyPagingItems.itemCount)
     val pagerState = rememberPagerState(
-        initialPage = 0,
-        initialPageOffsetFraction = 0f,
-        pageCount = { lazyPagingItems.itemCount },
+        pageCount = {
+            countState.value
+        },
     )
 
     VideoLibraryScreen(
@@ -167,7 +169,7 @@ fun VideoPager(
     ) {
         VerticalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxSize(),
         ) { page ->
             val videoDetail = lazyPagingItems[page]
 
@@ -292,7 +294,7 @@ fun rememberExoPlayer(
 
             val dataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(context)
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(MediaItem.fromUri(uri))
+                .createMediaSource(mediaItem)
 
             setMediaSource(mediaSource)
             prepare()
