@@ -76,6 +76,7 @@ import com.wei.picquest.core.pip.enterPictureInPicture
 import com.wei.picquest.core.pip.isInPictureInPictureMode
 import com.wei.picquest.core.pip.updatedPipParams
 import com.wei.picquest.feature.video.R
+import com.wei.picquest.feature.video.videolibrary.lifecycle.MediaPiPLifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -316,6 +317,8 @@ fun PlayerViewContainer(
         isPlayerReady = isPlayerReady,
         playerViewBounds = playerViewBounds,
     )
+
+    MediaPiPLifecycle(exoPlayer = exoPlayer)
 
     DisposableEffect(videoDetail.id) {
         onDispose { exoPlayer.release() }
