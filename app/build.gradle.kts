@@ -23,11 +23,11 @@ android {
          *
          * XYZ: App version (050 for 0.5.0)
          */
-        versionCode = 3414011
+        versionCode = 3414012
         /**
          * SemVer major.minor.patch
          */
-        versionName = "0.1.1"
+        versionName = "0.1.2"
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.wei.picquest.core.testing.PqTestRunner"
