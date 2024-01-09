@@ -20,7 +20,7 @@ class DefaultSearchImagesRepository @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
-                prefetchDistance = 5,
+                prefetchDistance = 3,
                 enablePlaceholders = false,
             ),
             pagingSourceFactory = { PixabayImagePagingSource(pqNetworkDataSource, query) },
