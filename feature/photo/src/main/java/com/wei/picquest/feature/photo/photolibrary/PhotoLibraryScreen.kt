@@ -55,13 +55,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.wei.picquest.core.data.model.ImageDetail
 import com.wei.picquest.core.designsystem.component.coilImagePainter
 import com.wei.picquest.core.designsystem.icon.PqIcons
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
+import com.wei.picquest.core.model.data.ImageDetail
 import com.wei.picquest.feature.photo.R
 import com.wei.picquest.feature.photo.photolibrary.component.LayoutSwitchWarningDialog
 import com.wei.picquest.feature.photo.photolibrary.data.fake.fakeImageDetails

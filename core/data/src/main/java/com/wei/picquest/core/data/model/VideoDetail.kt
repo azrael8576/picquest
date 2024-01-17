@@ -1,39 +1,11 @@
 package com.wei.picquest.core.data.model
 
+import com.wei.picquest.core.model.data.VideoDetail
+import com.wei.picquest.core.model.data.VideoDetailSize
+import com.wei.picquest.core.model.data.VideoStreams
 import com.wei.picquest.core.network.model.NetworkVideoDetail
 import com.wei.picquest.core.network.model.NetworkVideoDetailSize
 import com.wei.picquest.core.network.model.NetworkVideoStreams
-
-data class VideoDetail(
-    val id: Int,
-    val pageURL: String,
-    val type: String,
-    val tags: String,
-    val duration: Int,
-    val pictureId: String,
-    val videos: VideoStreams,
-    val views: Int,
-    val downloads: Int,
-    val likes: Int,
-    val comments: Int,
-    val userId: Int,
-    val user: String,
-    val userImageURL: String,
-)
-
-data class VideoStreams(
-    val large: VideoDetailSize,
-    val medium: VideoDetailSize,
-    val small: VideoDetailSize,
-    val tiny: VideoDetailSize,
-)
-
-data class VideoDetailSize(
-    val url: String,
-    val width: Int,
-    val height: Int,
-    val size: Long,
-)
 
 fun NetworkVideoDetail.asExternalModel() = VideoDetail(
     id = this.id,
