@@ -4,8 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.wei.picquest.core.data.model.ImageDetail
 import com.wei.picquest.core.data.model.asExternalModel
+import com.wei.picquest.core.model.data.ImageDetail
 import com.wei.picquest.core.network.PqNetworkDataSource
 import com.wei.picquest.core.network.pagingsource.PixabayImagePagingSource
 import kotlinx.coroutines.flow.Flow

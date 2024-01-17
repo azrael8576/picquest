@@ -1,6 +1,6 @@
 package com.wei.picquest.feature.photo.photolibrary.data.fake
 
-import com.wei.picquest.core.data.model.ImageDetail
+import com.wei.picquest.core.model.data.ImageDetail
 
 val fakeImageDetails = listOf(
     ImageDetail(

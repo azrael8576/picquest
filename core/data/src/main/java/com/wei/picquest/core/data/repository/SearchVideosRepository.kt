@@ -1,7 +1,7 @@
 package com.wei.picquest.core.data.repository
 
 import androidx.paging.PagingData
-import com.wei.picquest.core.data.model.VideoDetail
+import com.wei.picquest.core.model.data.VideoDetail
 import kotlinx.coroutines.flow.Flow
 
 interface SearchVideosRepository {

@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.wei.picquest.core.base.BaseViewModel
-import com.wei.picquest.core.data.model.VideoDetail
 import com.wei.picquest.core.data.repository.SearchVideosRepository
+import com.wei.picquest.core.model.data.VideoDetail
 import com.wei.picquest.feature.video.videolibrary.navigation.VideoLibraryArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
