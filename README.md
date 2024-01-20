@@ -36,32 +36,32 @@
 - Kotlin Flow
 
 #### Network
-- **Retrofit2 & OkHttp3**: [Retrofit2](https://github.com/square/retrofit) is widely used for constructing REST APIs in Android, working alongside OkHttp3 for efficient HTTP networking.
-- **Paging3**: The [Paging3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview?hl=en) library from Android's Jetpack suite is designed for efficient loading and displaying of paged data, which is essential for handling large datasets smoothly.
+- [_Retrofit2 & OkHttp3_](https://github.com/square/retrofit): Construct the REST APIs and paging network data.
+- [_Paging3_](https://developer.android.com/topic/libraries/architecture/paging/v3-overview?hl=en): Facilitates efficient loading and displaying of paged data as part of Android's Jetpack suite.
 
 #### Dependency Injection (DI)
-- **Hilt**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android?hl=en) simplifies dependency injection in Android, making it more manageable and concise.
+- [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android?hl=en): for dependency injection.
 
 #### Navigation
-- **Navigation Compose**: [Navigation Compose](https://developer.android.com/jetpack/compose/navigation?hl=en) integrates with the [Navigation component](https://developer.android.com/guide/navigation?hl=en) to support navigation in Jetpack Compose applications.
+- [_Navigation Compose_](https://developer.android.com/jetpack/compose/navigation?hl=en): The [_Navigation component_](https://developer.android.com/guide/navigation?hl=en) provides support for [_Jetpack Compose_](https://developer.android.com/jetpack/compose?hl=en) applications.
 
 #### Data Storage
-- **Proto DataStore**: [Proto DataStore](https://developer.android.com/topic/libraries/architecture/datastore?hl=en) is a data storage solution that uses protocol buffers, offering asynchronous and transactional data management.
+- [_Proto DataStore_](https://developer.android.com/topic/libraries/architecture/datastore?hl=en): A Jetpack solution for storing key-value pairs or typed objects using [_protocol buffers_](https://developers.google.com/protocol-buffers?hl=en). It leverages Kotlin coroutines and Flow for asynchronous and transactional data storage.
 
 #### Image Loading
-- **Coil**: [Coil](https://coil-kt.github.io/coil/) is a Kotlin-centric image loading library, leveraging the power of Kotlin Coroutines for efficient image handling.
+- [_Coil_](https://coil-kt.github.io/coil/): An image loading library for Android backed by Kotlin Coroutines.
 
 #### Jetpack Media3
-- **ExoPlayer**: [ExoPlayer](https://developer.android.com/guide/topics/media/media3?hl=en) is a key part of Jetpack Media3, offering advanced media playback capabilities.
+- [_ExoPlayer_](https://developer.android.com/guide/topics/media/media3?hl=en): A key part of Jetpack Media3, offering advanced media playback capabilities.
 
 #### Testing
-- **Turbine**: [Turbine](https://github.com/cashapp/turbine) is a specialized library for testing Kotlin's coroutines Flow.
-- **Google Truth**: [Google Truth](https://github.com/google/truth) provides fluent assertion capabilities, enhancing testing in Java and Android.
-- **Roborazzi**: [Roborazzi](https://github.com/takahirom/roborazzi) is a JVM-based screenshot testing tool.
-- **Robolectric**: [Robolectric](https://github.com/robolectric/robolectric) remains the standard in Android unit testing, offering robust testing capabilities without the need for an emulator.
+- [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
+- [_Google Truth_](https://github.com/google/truth): Fluent assertions for Java and Android.
+- [_Roborazzi_](https://github.com/takahirom/roborazzi): A screenshot testing library for JVM.
+- [_Robolectric_](https://github.com/robolectric/robolectric): Robolectric is the industry-standard unit testing framework for Android.
 
 #### Backend
-- **Pixabay API**: The [Pixabay API](https://pixabay.com/api/docs/) allows access to a vast library of images and videos, useful for various applications requiring multimedia content.
+- [_Pixabay API_](https://pixabay.com/api/docs/): Offers access to a vast multimedia content library, suitable for various applications.
 
 ## Require
 
