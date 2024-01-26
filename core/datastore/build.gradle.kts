@@ -45,8 +45,8 @@ androidComponents.beforeVariants {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
+    implementation(projects.core.common)
+    implementation(projects.core.model)
 
     // DataStore
     implementation(libs.androidx.datastore)
