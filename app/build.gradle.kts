@@ -90,6 +90,8 @@ dependencies {
     debugImplementation(projects.uiTestHiltManifest)
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
+    kspTest(libs.hilt.compiler)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
 

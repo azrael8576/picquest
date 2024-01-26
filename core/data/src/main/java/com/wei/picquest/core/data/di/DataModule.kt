@@ -15,25 +15,25 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DataModule {
+abstract class DataModule {
 
     @Binds
-    fun bindsSearchImagesRepository(
+    internal abstract fun bindsSearchImagesRepository(
         searchImagesRepository: DefaultSearchImagesRepository,
     ): SearchImagesRepository
 
     @Binds
-    fun bindsSearchVideosRepository(
+    internal abstract fun bindsSearchVideosRepository(
         searchVideosRepository: DefaultSearchVideosRepository,
     ): SearchVideosRepository
 
     @Binds
-    fun bindsNetworkMonitor(
+    internal abstract fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
     ): NetworkMonitor
 
     @Binds
-    fun bindsUserDataRepository(
+    internal abstract fun bindsUserDataRepository(
         userDataRepository: DefaultUserDataRepository,
     ): UserDataRepository
 }
