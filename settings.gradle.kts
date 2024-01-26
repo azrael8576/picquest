@@ -27,6 +27,7 @@ include(":core:domain")
 include(":core:model")
 include(":core:network")
 include(":core:datastore")
+include(":core:datastore-proto")
 include(":core:datastore-test")
 
 include(":ui-test-hilt-manifest")
