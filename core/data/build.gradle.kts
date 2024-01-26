@@ -15,10 +15,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.common)
-    implementation(projects.core.network)
-    implementation(projects.core.model)
-    implementation(projects.core.datastore)
+    api(projects.core.common)
+    api(projects.core.network)
+    api(projects.core.model)
+    api(projects.core.datastore)
 
     implementation(libs.kotlinx.serialization.json)
 }
