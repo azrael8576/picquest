@@ -9,10 +9,10 @@ import com.wei.picquest.core.designsystem.ui.PqContentType
 import com.wei.picquest.core.designsystem.ui.PqNavigationType
 import com.wei.picquest.feature.contactme.contactme.ContactMeRoute
 
-const val contactMeRoute = "contact_me_route"
+const val CONTACT_ME_ROUTE = "contact_me_route"
 
 fun NavController.navigateToContactMe(navOptions: NavOptions? = null) {
-    this.navigate(contactMeRoute, navOptions)
+    this.navigate(CONTACT_ME_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.contactMeGraph(
@@ -22,7 +22,7 @@ fun NavGraphBuilder.contactMeGraph(
     navigationType: PqNavigationType,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
-    composable(route = contactMeRoute) {
+    composable(route = CONTACT_ME_ROUTE) {
         ContactMeRoute(
             navController = navController,
             contentType = contentType,

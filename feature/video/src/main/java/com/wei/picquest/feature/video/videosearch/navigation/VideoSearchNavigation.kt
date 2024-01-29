@@ -6,17 +6,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wei.picquest.feature.video.videosearch.VideoSearchRoute
 
-const val videoSearchRoute = "video_search_route"
+const val VIDEO_SEARCH_ROUTE = "video_search_route"
 
 fun NavController.navigateToVideoSearch(navOptions: NavOptions? = null) {
-    this.navigate(videoSearchRoute, navOptions)
+    this.navigate(VIDEO_SEARCH_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.videoSearchGraph(
     navController: NavController,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
-    composable(route = videoSearchRoute) {
+    composable(route = VIDEO_SEARCH_ROUTE) {
         VideoSearchRoute(
             navController = navController,
         )

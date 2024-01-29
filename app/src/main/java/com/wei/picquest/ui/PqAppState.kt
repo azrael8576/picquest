@@ -27,14 +27,14 @@ import com.wei.picquest.core.designsystem.ui.currentDeviceOrientation
 import com.wei.picquest.core.designsystem.ui.isBookPosture
 import com.wei.picquest.core.designsystem.ui.isSeparating
 import com.wei.picquest.core.pip.isInPictureInPictureMode
-import com.wei.picquest.feature.contactme.contactme.navigation.contactMeRoute
+import com.wei.picquest.feature.contactme.contactme.navigation.CONTACT_ME_ROUTE
 import com.wei.picquest.feature.contactme.contactme.navigation.navigateToContactMe
-import com.wei.picquest.feature.home.home.navigation.homeRoute
+import com.wei.picquest.feature.home.home.navigation.HOME_ROUTE
 import com.wei.picquest.feature.home.home.navigation.navigateToHome
+import com.wei.picquest.feature.photo.photosearch.navigation.PHOTO_SEARCH_ROUTE
 import com.wei.picquest.feature.photo.photosearch.navigation.navigateToPhotoSearch
-import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchRoute
+import com.wei.picquest.feature.video.videosearch.navigation.VIDEO_SEARCH_ROUTE
 import com.wei.picquest.feature.video.videosearch.navigation.navigateToVideoSearch
-import com.wei.picquest.feature.video.videosearch.navigation.videoSearchRoute
 import com.wei.picquest.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -84,95 +84,102 @@ class PqAppState(
      */
     val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
 
-    val foldingDevicePosture = when {
-        isBookPosture(foldingFeature) ->
-            DevicePosture.BookPosture(foldingFeature.bounds)
+    val foldingDevicePosture =
+        when {
+            isBookPosture(foldingFeature) ->
+                DevicePosture.BookPosture(foldingFeature.bounds)
 
-        isSeparating(foldingFeature) ->
-            DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
+            isSeparating(foldingFeature) ->
+                DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
 
-        else -> DevicePosture.NormalPosture
-    }
+            else -> DevicePosture.NormalPosture
+        }
 
     /**
      * This will help us select type of navigation and content type depending on window size and
      * fold state of the device.
      */
     val navigationType: PqNavigationType
-        @Composable get() = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> {
-                PqNavigationType.BOTTOM_NAVIGATION
-            }
+        @Composable get() =
+            when (windowSizeClass.widthSizeClass) {
+                WindowWidthSizeClass.Compact -> {
+                    PqNavigationType.BOTTOM_NAVIGATION
+                }
 
-            WindowWidthSizeClass.Medium -> {
-                PqNavigationType.NAVIGATION_RAIL
-            }
-
-            WindowWidthSizeClass.Expanded -> {
-                if (foldingDevicePosture is DevicePosture.BookPosture) {
+                WindowWidthSizeClass.Medium -> {
                     PqNavigationType.NAVIGATION_RAIL
-                } else {
-                    PqNavigationType.PERMANENT_NAVIGATION_DRAWER
+                }
+
+                WindowWidthSizeClass.Expanded -> {
+                    if (foldingDevicePosture is DevicePosture.BookPosture) {
+                        PqNavigationType.NAVIGATION_RAIL
+                    } else {
+                        PqNavigationType.PERMANENT_NAVIGATION_DRAWER
+                    }
+                }
+
+                else -> {
+                    PqNavigationType.BOTTOM_NAVIGATION
                 }
             }
 
-            else -> {
-                PqNavigationType.BOTTOM_NAVIGATION
-            }
-        }
-
     val contentType: PqContentType
-        @Composable get() = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> {
-                PqContentType.SINGLE_PANE
-            }
+        @Composable get() =
+            when (windowSizeClass.widthSizeClass) {
+                WindowWidthSizeClass.Compact -> {
+                    PqContentType.SINGLE_PANE
+                }
 
-            WindowWidthSizeClass.Medium -> {
-                if (foldingDevicePosture != DevicePosture.NormalPosture) {
+                WindowWidthSizeClass.Medium -> {
+                    if (foldingDevicePosture != DevicePosture.NormalPosture) {
+                        PqContentType.DUAL_PANE
+                    } else {
+                        PqContentType.SINGLE_PANE
+                    }
+                }
+
+                WindowWidthSizeClass.Expanded -> {
                     PqContentType.DUAL_PANE
-                } else {
+                }
+
+                else -> {
                     PqContentType.SINGLE_PANE
                 }
             }
 
-            WindowWidthSizeClass.Expanded -> {
-                PqContentType.DUAL_PANE
-            }
-
-            else -> {
-                PqContentType.SINGLE_PANE
-            }
-        }
-
     val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() =
+            navController
+                .currentBackStackEntryAsState().value?.destination
 
     val isFullScreenCurrentDestination: Boolean
-        @Composable get() = when (currentDestination?.route) {
-            null -> true
-            else -> false
-        }
+        @Composable get() =
+            when (currentDestination?.route) {
+                null -> true
+                else -> false
+            }
 
     val isInPictureInPicture: Boolean
         @Composable get() = LocalContext.current.isInPictureInPictureMode
 
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when (currentDestination?.route) {
-            homeRoute -> TopLevelDestination.HOME
-            photoSearchRoute -> TopLevelDestination.PHOTO
-            videoSearchRoute -> TopLevelDestination.VIDEO
-            contactMeRoute -> TopLevelDestination.CONTACT_ME
-            else -> null
-        }
+        @Composable get() =
+            when (currentDestination?.route) {
+                HOME_ROUTE -> TopLevelDestination.HOME
+                PHOTO_SEARCH_ROUTE -> TopLevelDestination.PHOTO
+                VIDEO_SEARCH_ROUTE -> TopLevelDestination.VIDEO
+                CONTACT_ME_ROUTE -> TopLevelDestination.CONTACT_ME
+                else -> null
+            }
 
-    val isOffline = networkMonitor.isOnline
-        .map(Boolean::not)
-        .stateIn(
-            scope = coroutineScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false,
-        )
+    val isOffline =
+        networkMonitor.isOnline
+            .map(Boolean::not)
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = false,
+            )
 
     val showFunctionalityNotAvailablePopup: MutableState<Boolean> = mutableStateOf(false)
 
@@ -191,36 +198,41 @@ class PqAppState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
-            val topLevelNavOptions = navOptions {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
+            val topLevelNavOptions =
+                navOptions {
+                    // Pop up to the start destination of the graph to
+                    // avoid building up a large stack of destinations
+                    // on the back stack as users select items
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
                 }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
 
             when (topLevelDestination) {
-                TopLevelDestination.HOME -> navController.navigateToHome(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.HOME ->
+                    navController.navigateToHome(
+                        topLevelNavOptions,
+                    )
 
-                TopLevelDestination.PHOTO -> navController.navigateToPhotoSearch(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.PHOTO ->
+                    navController.navigateToPhotoSearch(
+                        topLevelNavOptions,
+                    )
 
-                TopLevelDestination.VIDEO -> navController.navigateToVideoSearch(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.VIDEO ->
+                    navController.navigateToVideoSearch(
+                        topLevelNavOptions,
+                    )
 
-                TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.CONTACT_ME ->
+                    navController.navigateToContactMe(
+                        topLevelNavOptions,
+                    )
 
                 else -> showFunctionalityNotAvailablePopup.value = true
             }

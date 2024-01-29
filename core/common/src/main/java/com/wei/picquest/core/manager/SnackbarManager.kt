@@ -9,7 +9,7 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val ErrorTextPrefix = "Error:"
+const val ERROR_TEXT_PREFIX = "Error:"
 
 enum class SnackbarState {
     Default,

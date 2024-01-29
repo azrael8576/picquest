@@ -51,9 +51,9 @@ class NavigationTest {
     }
 
     /*
-    * When pressing back from any top level destination except "Home", the app navigates back
-    * to the "Home" destination, no matter which destinations you visited in between.
-    */
+     * When pressing back from any top level destination except "Home", the app navigates back
+     * to the "Home" destination, no matter which destinations you visited in between.
+     */
     @Test
     fun navigationBar_backFromAnyDestination_returnsToHome() {
         homeEndToEndRobot(composeTestRule) {
@@ -68,8 +68,8 @@ class NavigationTest {
     }
 
     /*
-    * There should always be at most one instance of a top-level destination at the same time.
-    */
+     * There should always be at most one instance of a top-level destination at the same time.
+     */
     @Test(expected = NoActivityResumedException::class)
     fun topDestination_back_quitsApp() {
         homeEndToEndRobot(composeTestRule) {

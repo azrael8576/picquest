@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
 import com.wei.picquest.core.designsystem.ui.DeviceOrientation
 import com.wei.picquest.feature.contactme.contactme.navigation.contactMeGraph
+import com.wei.picquest.feature.home.home.navigation.HOME_ROUTE
 import com.wei.picquest.feature.home.home.navigation.homeGraph
-import com.wei.picquest.feature.home.home.navigation.homeRoute
 import com.wei.picquest.feature.photo.photolibrary.navigation.photoLibraryGraph
 import com.wei.picquest.feature.photo.photosearch.navigation.photoSearchGraph
 import com.wei.picquest.feature.video.videolibrary.navigation.videoLibraryGraph
@@ -26,7 +26,7 @@ fun PqNavHost(
     modifier: Modifier = Modifier,
     appState: PqAppState,
     displayFeatures: List<DisplayFeature>,
-    startDestination: String = homeRoute,
+    startDestination: String = HOME_ROUTE,
 ) {
     val navController = appState.navController
     val navigationType = appState.navigationType
