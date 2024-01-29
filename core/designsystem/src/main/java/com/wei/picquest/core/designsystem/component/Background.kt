@@ -50,7 +50,7 @@ annotation class ThemePreviews
 @ThemePreviews
 @Composable
 fun BackgroundDefault() {
-    PqTheme() {
+    PqTheme {
         PqBackground(Modifier.size(100.dp), content = {})
     }
 }

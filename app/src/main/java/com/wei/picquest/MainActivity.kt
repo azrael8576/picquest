@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
-            CompositionLocalProvider() {
+            CompositionLocalProvider {
                 PqTheme(darkTheme = darkTheme) {
                     PqApp(
                         networkMonitor = networkMonitor,

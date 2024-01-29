@@ -51,7 +51,7 @@ import com.wei.picquest.core.designsystem.component.PqNavigationRail
 import com.wei.picquest.core.designsystem.component.PqNavigationRailItem
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.ui.PqNavigationType
-import com.wei.picquest.core.manager.ErrorTextPrefix
+import com.wei.picquest.core.manager.ERROR_TEXT_PREFIX
 import com.wei.picquest.core.manager.Message
 import com.wei.picquest.core.manager.SnackbarManager
 import com.wei.picquest.core.manager.SnackbarState
@@ -69,11 +69,12 @@ fun PqApp(
     networkMonitor: NetworkMonitor,
     windowSizeClass: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
-    appState: PqAppState = rememberPqAppState(
-        networkMonitor = networkMonitor,
-        windowSizeClass = windowSizeClass,
-        displayFeatures = displayFeatures,
-    ),
+    appState: PqAppState =
+        rememberPqAppState(
+            networkMonitor = networkMonitor,
+            windowSizeClass = windowSizeClass,
+            displayFeatures = displayFeatures,
+        ),
     snackbarManager: SnackbarManager,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -109,7 +110,8 @@ fun PqApp(
     }
     PqBackground {
         Scaffold(
-            modifier = Modifier.semantics {
+            modifier =
+            Modifier.semantics {
                 testTagsAsResourceId = true
             },
             containerColor = Color.Transparent,
@@ -122,7 +124,7 @@ fun PqApp(
                         ConditionalContent(
                             condition = !appState.isInPictureInPicture && !appState.isFullScreenCurrentDestination,
                             content = {
-                                val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                                val isError = snackbarData.visuals.message.startsWith(ERROR_TEXT_PREFIX)
                                 PqAppSnackbar(snackbarData, isError)
                             },
                         )
@@ -131,7 +133,8 @@ fun PqApp(
             },
             bottomBar = {
                 ConditionalContent(
-                    condition = !appState.isInPictureInPicture &&
+                    condition =
+                    !appState.isInPictureInPicture &&
                         !appState.isFullScreenCurrentDestination &&
                         appState.navigationType == PqNavigationType.BOTTOM_NAVIGATION,
                     content = {
@@ -157,7 +160,8 @@ fun PqApp(
                     ),
             ) {
                 ConditionalContent(
-                    condition = !appState.isInPictureInPicture &&
+                    condition =
+                    !appState.isInPictureInPicture &&
                         !appState.isFullScreenCurrentDestination &&
                         appState.navigationType == PqNavigationType.PERMANENT_NAVIGATION_DRAWER,
                     content = {
@@ -165,7 +169,8 @@ fun PqApp(
                             destinations = appState.topLevelDestinations,
                             onNavigateToDestination = appState::navigateToTopLevelDestination,
                             currentDestination = appState.currentDestination,
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .testTag(pqNavDrawer)
                                 .padding(SPACING_LARGE.dp)
                                 .safeDrawingPadding(),
@@ -174,7 +179,8 @@ fun PqApp(
                 )
 
                 ConditionalContent(
-                    condition = !appState.isInPictureInPicture &&
+                    condition =
+                    !appState.isInPictureInPicture &&
                         !appState.isFullScreenCurrentDestination &&
                         appState.navigationType == PqNavigationType.NAVIGATION_RAIL,
                     content = {
@@ -182,7 +188,8 @@ fun PqApp(
                             destinations = appState.topLevelDestinations,
                             onNavigateToDestination = appState::navigateToTopLevelDestination,
                             currentDestination = appState.currentDestination,
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .testTag(pqNavRail)
                                 .safeDrawingPadding(),
                         )
@@ -190,7 +197,8 @@ fun PqApp(
                 )
 
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize(),
                 ) {
                     PqNavHost(
@@ -331,7 +339,7 @@ suspend fun collectAndShowSnackbar(
 
             if (message.state == SnackbarState.Error) {
                 snackbarHostState.showSnackbar(
-                    message = ErrorTextPrefix + text,
+                    message = ERROR_TEXT_PREFIX + text,
                 )
             } else {
                 snackbarHostState.showSnackbar(message = text)
@@ -341,13 +349,17 @@ suspend fun collectAndShowSnackbar(
     }
 }
 
-fun getMessageText(message: Message, context: Context): String {
+fun getMessageText(
+    message: Message,
+    context: Context,
+): String {
     return when (message.uiText) {
         is UiText.DynamicString -> (message.uiText as UiText.DynamicString).value
-        is UiText.StringResource -> context.getString(
-            (message.uiText as UiText.StringResource).resId,
-            *(message.uiText as UiText.StringResource).args.map { it.toString(context) }
-                .toTypedArray(),
-        )
+        is UiText.StringResource ->
+            context.getString(
+                (message.uiText as UiText.StringResource).resId,
+                *(message.uiText as UiText.StringResource).args.map { it.toString(context) }
+                    .toTypedArray(),
+            )
     }
 }
