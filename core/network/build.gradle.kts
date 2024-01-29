@@ -27,15 +27,16 @@ dependencies {
     api(projects.core.common)
     api(projects.core.model)
 
+    // KotlinxSerializationJson
+    implementation(libs.kotlinx.serialization.json)
     // Okhttp Interceptor
     implementation(libs.okhttp.logging)
-
     // Retrofit2
     implementation(libs.retrofit.core)
-
     // RetrofitKotlinxSerializationJson
     implementation(libs.retrofit.kotlin.serialization)
 
-    // KotlinxSerializationJson
-    implementation(libs.kotlinx.serialization.json)
+    testImplementation(projects.core.testing)
+
+    androidTestImplementation(projects.core.testing)
 }

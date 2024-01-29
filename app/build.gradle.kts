@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.pq.android.application.compose)
     alias(libs.plugins.pq.android.application.flavors)
     alias(libs.plugins.pq.android.hilt)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -66,57 +67,52 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.contactme)
     implementation(projects.feature.home)
     implementation(projects.feature.photo)
     implementation(projects.feature.video)
-    implementation(projects.feature.contactme)
 
-    implementation(projects.core.designsystem)
     implementation(projects.core.common)
     implementation(projects.core.data)
-    implementation(projects.core.model)
     implementation(projects.core.datastore)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.model)
 
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    // Splashscreen
+    implementation(libs.androidx.core.splashscreen)
+    // Write trace events to the system trace buffer.
+    implementation(libs.androidx.tracing.ktx)
+    // LifeCycle
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    // WindowSizeClass
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    // Timber
+    implementation(libs.timber)
 
-    androidTestImplementation(projects.core.designsystem)
-    androidTestImplementation(projects.core.datastoreTest)
-    androidTestImplementation(projects.core.testing)
-    androidTestImplementation(libs.androidx.navigation.testing)
-    androidTestImplementation(libs.accompanist.testharness)
-    testImplementation(projects.core.datastoreTest)
-    testImplementation(projects.core.testing)
-    testImplementation(libs.androidx.navigation.testing)
-    testImplementation(libs.accompanist.testharness)
     debugImplementation(projects.uiTestHiltManifest)
+    // LeakCanary
+    debugImplementation(libs.leakcanary)
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
     kspTest(libs.hilt.compiler)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.activity.compose)
+    testImplementation(projects.core.datastoreTest)
+    testImplementation(projects.core.testing)
+    testImplementation(libs.accompanist.testharness)
+    testImplementation(libs.hilt.android.testing)
 
-    // LifeCycle
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
+    testDemoImplementation(libs.robolectric)
+    testDemoImplementation(libs.roborazzi)
 
-    // Navigation
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Splashscreen
-    implementation(libs.androidx.core.splashscreen)
-
-    // Timber
-    implementation(libs.timber)
-
-    // ExoPlayer
-    implementation(libs.media3.exoplayer)
-    implementation(libs.media3.exoplayer.dash)
-    implementation(libs.media3.ui)
-
-    // LeakCanary
-    debugImplementation(libs.leakcanary)
+    androidTestImplementation(projects.core.datastoreTest)
+    androidTestImplementation(projects.core.testing)
+    androidTestImplementation(libs.accompanist.testharness)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.hilt.android.testing)
 }

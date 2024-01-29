@@ -9,9 +9,13 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.core.data)
     // ExoPlayer
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.exoplayer.dash)
     implementation(libs.media3.ui)
+
+    testImplementation(projects.core.testing)
+
+    androidTestImplementation(projects.core.testing)
 }
