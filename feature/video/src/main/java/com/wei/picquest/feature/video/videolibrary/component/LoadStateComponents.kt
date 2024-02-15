@@ -34,9 +34,9 @@ internal fun LoadingView(
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
     ) {
         if (isPreview) {
             val resId = R.drawable.feature_video_preview_images
@@ -49,10 +49,10 @@ internal fun LoadingView(
         } else {
             AsyncImage(
                 model =
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(previewUrl)
-                        .crossfade(true)
-                        .build(),
+                ImageRequest.Builder(LocalContext.current)
+                    .data(previewUrl)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = "",
                 modifier = Modifier.fillMaxSize(),
             )
@@ -88,11 +88,11 @@ fun NoDataMessage() {
     val noDataFound = stringResource(R.string.feature_video_no_data_found)
     Box(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .semantics {
-                    contentDescription = noDataFound
-                },
+        Modifier
+            .fillMaxSize()
+            .semantics {
+                contentDescription = noDataFound
+            },
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
