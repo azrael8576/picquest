@@ -99,7 +99,6 @@ internal fun VideoSearchRoute(
         onSearchQueryChanged = {
             viewModel.dispatch(VideoSearchViewAction.SearchQueryChanged(it))
         },
-
         onSearchTriggered = {
             viewModel.dispatch(VideoSearchViewAction.SearchTriggered(it))
             navController.navigateToVideoLibrary(it)
@@ -180,12 +179,14 @@ private fun RecentSearchesBody(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = buildAnnotatedString {
+                text =
+                buildAnnotatedString {
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append(stringResource(id = R.string.recent_video_searches))
+                        append(stringResource(id = R.string.feature_video_recent_video_searches))
                     }
                 },
-                modifier = Modifier.padding(
+                modifier =
+                Modifier.padding(
                     horizontal = SPACING_LARGE.dp,
                     vertical = SPACING_SMALL.dp,
                 ),
@@ -199,8 +200,9 @@ private fun RecentSearchesBody(
                 ) {
                     Icon(
                         imageVector = PqIcons.Close,
-                        contentDescription = stringResource(
-                            id = R.string.clear_recent_searches_content_desc,
+                        contentDescription =
+                        stringResource(
+                            id = R.string.feature_video_clear_recent_searches_content_desc,
                         ),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
@@ -212,7 +214,8 @@ private fun RecentSearchesBody(
                 Text(
                     text = recentSearch,
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(vertical = SPACING_LARGE.dp)
                         .clickable { onRecentSearchClicked(recentSearch) }
                         .fillMaxWidth(),
@@ -238,7 +241,8 @@ private fun SearchTextField(
     }
 
     TextField(
-        colors = TextFieldDefaults.colors(
+        colors =
+        TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
@@ -246,7 +250,7 @@ private fun SearchTextField(
         leadingIcon = {
             Icon(
                 imageVector = PqIcons.Search,
-                contentDescription = stringResource(R.string.search),
+                contentDescription = stringResource(R.string.feature_video_search),
                 tint = MaterialTheme.colorScheme.onSurface,
             )
         },
@@ -259,7 +263,7 @@ private fun SearchTextField(
                 ) {
                     Icon(
                         imageVector = PqIcons.Close,
-                        contentDescription = stringResource(R.string.clear_search_text_content_desc),
+                        contentDescription = stringResource(R.string.feature_video_clear_search_text_content_desc),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
@@ -270,7 +274,8 @@ private fun SearchTextField(
                 onSearchQueryChanged(it)
             }
         },
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .padding(SPACING_LARGE.dp)
             .focusRequester(focusRequester)
@@ -285,10 +290,12 @@ private fun SearchTextField(
             .testTag("searchTextField"),
         shape = RoundedCornerShape(32.dp),
         value = searchQuery,
-        keyboardOptions = KeyboardOptions(
+        keyboardOptions =
+        KeyboardOptions(
             imeAction = ImeAction.Search,
         ),
-        keyboardActions = KeyboardActions(
+        keyboardActions =
+        KeyboardActions(
             onSearch = {
                 onSearchExplicitlyTriggered()
             },
@@ -307,9 +314,11 @@ private fun SearchTextField(
 fun VideoSearchScreenPreview() {
     PqTheme {
         VideoSearchScreen(
-            uiStates = VideoSearchViewState(
+            uiStates =
+            VideoSearchViewState(
                 searchQuery = "cat video",
-                recentSearchQueries = listOf(
+                recentSearchQueries =
+                listOf(
                     "cat",
                     "mouse",
                 ),

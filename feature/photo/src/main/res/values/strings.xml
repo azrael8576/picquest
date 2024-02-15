@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="retry">Retry</string>
-    <string name="error_message">An error occurred, please try again later</string>
-    <string name="layout_switch_warning">Switching layouts will reset the scroll position to the top due to the dynamic grid layout.</string>
-    <string name="understand">Understand</string>
-    <string name="search">Search</string>
-    <string name="clear_search_text_content_desc">Clear search text</string>
-    <string name="recent_searches">Recent searches</string>
-    <string name="clear_recent_searches_content_desc">Clear searches</string>
-    <string name="no_data_found">No Data Found</string>
+    <string name="feature_photo_retry">Retry</string>
+    <string name="feature_photo_error_message">An error occurred, please try again later</string>
+    <string name="feature_photo_layout_switch_warning">Switching layouts will reset the scroll position to the top due to the dynamic grid layout.</string>
+    <string name="feature_photo_understand">Understand</string>
+    <string name="feature_photo_search">Search</string>
+    <string name="feature_photo_clear_search_text_content_desc">Clear search text</string>
+    <string name="feature_photo_recent_searches">Recent searches</string>
+    <string name="feature_photo_clear_recent_searches_content_desc">Clear searches</string>
+    <string name="feature_photo_no_data_found">No Data Found</string>
 </resources>

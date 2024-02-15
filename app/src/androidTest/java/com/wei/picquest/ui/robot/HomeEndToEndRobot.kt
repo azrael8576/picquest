@@ -26,11 +26,12 @@ internal fun homeEndToEndRobot(
 internal open class HomeEndToEndRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val importantNoteDescription by composeTestRule.stringResource(FeatureHomeR.string.important_note)
+    private val importantNoteDescription by composeTestRule.stringResource(FeatureHomeR.string.feature_home_important_note)
 
     private val importantNote by lazy {
         composeTestRule.onNode(hasContentDescription(importantNoteDescription))

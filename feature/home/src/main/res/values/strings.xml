@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="important_note">
+    <string name="feature_home_important_note">
         ❗Important Notes:
     </string>
-    <string name="important_note_message">
+    <string name="feature_home_important_note_message">
         • PicQuest uses Pixabay API as its image source.\n\n
         • For developers: Please replace the API_KEY in `${Project_Root_Directory}/secrets.defaults.properties` with your Pixabay API key.\n\n
         • For non-developers: Ensure that your PicQuest Apk is sourced from github.com/azrael8576/picquest, specifically from the apk in the project\'s Releases.\n\n

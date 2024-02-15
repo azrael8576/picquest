@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="important_note">
+    <string name="feature_home_important_note">
         ❗重要提示：
     </string>
-    <string name="important_note_message">
+    <string name="feature_home_important_note_message">
         • PicQuest 使用 Pixabay API 作為圖片來源。\n\n
         • 對於開發人員：請將 `${專案根目錄}/secrets.defaults.properties` 中的 API_KEY 替換為你的 Pixabay API 金鑰。\n\n
         • 對於非開發人員：確保你的 PicQuest Apk 來源為 github.com/azrael8576/picquest 此專案 Releases 之 apk。\n\n

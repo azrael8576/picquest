@@ -33,12 +33,13 @@ internal fun LoadingView(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
         if (isPreview) {
-            val resId = R.drawable.preview_images
+            val resId = R.drawable.feature_video_preview_images
             val painter = coilImagePainter(resId, isPreview)
             Image(
                 painter = painter,
@@ -47,7 +48,8 @@ internal fun LoadingView(
             )
         } else {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(previewUrl)
                     .crossfade(true)
                     .build(),
@@ -76,16 +78,17 @@ fun PageLoaderError(onClickRetry: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
     ) {
         OutlinedButton(onClick = onClickRetry) {
-            Text(text = stringResource(R.string.retry))
+            Text(text = stringResource(R.string.feature_video_retry))
         }
     }
 }
 
 @Composable
 fun NoDataMessage() {
-    val noDataFound = stringResource(R.string.no_data_found)
+    val noDataFound = stringResource(R.string.feature_video_no_data_found)
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .semantics {
                 contentDescription = noDataFound

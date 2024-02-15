@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="retry">Retry</string>
-    <string name="error_message">發生錯誤，請稍後重試</string>
-    <string name="layout_switch_warning">因為網格採動態佈局，故切換佈局時會重新滾動至頂部。</string>
-    <string name="understand">了解</string>
-    <string name="search">搜尋</string>
-    <string name="clear_search_text_content_desc">清除搜尋文字</string>
-    <string name="recent_searches">最近的搜尋</string>
-    <string name="clear_recent_searches_content_desc">清除搜尋</string>
-    <string name="no_data_found">沒有找到數據</string>
+    <string name="feature_photo_retry">Retry</string>
+    <string name="feature_photo_error_message">發生錯誤，請稍後重試</string>
+    <string name="feature_photo_layout_switch_warning">因為網格採動態佈局，故切換佈局時會重新滾動至頂部。</string>
+    <string name="feature_photo_understand">了解</string>
+    <string name="feature_photo_search">搜尋</string>
+    <string name="feature_photo_clear_search_text_content_desc">清除搜尋文字</string>
+    <string name="feature_photo_recent_searches">最近的搜尋</string>
+    <string name="feature_photo_clear_recent_searches_content_desc">清除搜尋</string>
+    <string name="feature_photo_no_data_found">沒有找到數據</string>
 </resources>
