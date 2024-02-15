@@ -6,39 +6,66 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.wei.picquest.core.data.utils.NetworkMonitor
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.manager.SnackbarManager
 import com.wei.picquest.ui.PqApp
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var snackbarManager: SnackbarManager
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen()
+    private val viewModel: MainActivityViewModel by viewModels()
 
-        splashScreen.setKeepOnScreenCondition { true }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+        super.onCreate(savedInstanceState)
+
+        var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
+
+        // Update the uiState
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState
+                    .onEach { uiState = it }
+                    .collect()
+            }
+        }
+
+        // Keep the splash screen on-screen until the UI state is loaded. This condition is
+        // evaluated each time the app needs to be redrawn so it should be fast to avoid blocking
+        // the UI.
+        splashScreen.setKeepOnScreenCondition {
+            when (uiState) {
+                MainActivityUiState.Loading -> true
+                is MainActivityUiState.Success -> false
+            }
+        }
 
         // Turn off the decor fitting system windows, which allows us to handle insets,
         // including IME animations, and go edge-to-edge
@@ -54,11 +81,13 @@ class MainActivity : ComponentActivity() {
             // than the configuration's dark theme value based on the user preference.
             DisposableEffect(darkTheme) {
                 enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(
+                    statusBarStyle =
+                    SystemBarStyle.auto(
                         Color.TRANSPARENT,
                         Color.TRANSPARENT,
                     ) { darkTheme },
-                    navigationBarStyle = SystemBarStyle.auto(
+                    navigationBarStyle =
+                    SystemBarStyle.auto(
                         lightScrim,
                         darkScrim,
                     ) { darkTheme },
@@ -76,13 +105,6 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
-        }
-
-        lifecycleScope.launch {
-            // TODO Wei Loading user data,
-            //  e.g. Photo ViewType, Search record
-            delay(2_000)
-            splashScreen.setKeepOnScreenCondition { false }
         }
     }
 }
