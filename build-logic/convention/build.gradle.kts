@@ -58,10 +58,6 @@ gradlePlugin {
             id = "pq.android.application.flavors"
             implementationClass = "AndroidApplicationFlavorsConventionPlugin"
         }
-        register("androidLint") {
-            id = "pq.android.lint"
-            implementationClass = "AndroidLintConventionPlugin"
-        }
         register("jvmLibrary") {
             id = "pq.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"

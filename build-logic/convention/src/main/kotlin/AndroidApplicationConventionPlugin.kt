@@ -1,6 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.wei.picquest.configureGradleManagedDevices
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.wei.picquest.configureKotlinAndroid
 import com.wei.picquest.configurePrintApksTask
 import org.gradle.api.Plugin
@@ -13,7 +13,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
-                apply("pq.android.lint")
             }
 
             extensions.configure<ApplicationExtension> {
@@ -26,4 +25,5 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
         }
     }
+
 }
