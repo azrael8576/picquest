@@ -142,12 +142,11 @@ fun TopBarActions(
 }
 
 @Composable
-fun BackButton(
-    onBackClick: () -> Unit,
-) {
+fun BackButton(onBackClick: () -> Unit) {
     IconButton(
         onClick = { onBackClick() },
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .semantics { contentDescription = "Search" },
@@ -180,7 +179,8 @@ fun SwitchLayoutButton(
         onClick = {
             showPopup.value = true
         },
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .semantics { contentDescription = "Switch Layout" },
@@ -278,22 +278,25 @@ fun ImageDetailItem(
     SubcomposeAsyncImage(
         model = imageDetail.webformatURL,
         contentDescription = null,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .aspectRatio(imageAspectRatio),
     ) {
         when (painter.state) {
             is AsyncImagePainter.State.Loading, is AsyncImagePainter.State.Error -> {
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth()
                         .aspectRatio(imageAspectRatio),
                     contentAlignment = Alignment.Center,
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.placeholder_image),
+                        painter = painterResource(id = R.drawable.feature_photo_placeholder_image),
                         contentDescription = null,
-                        modifier = if (layoutType == LayoutType.LIST) {
+                        modifier =
+                        if (layoutType == LayoutType.LIST) {
                             Modifier.size(300.dp)
                         } else {
                             Modifier.size(120.dp)
@@ -310,14 +313,13 @@ fun ImageDetailItem(
 }
 
 @Composable
-fun PreviewImageDetailItem(
-    imageAspectRatio: Float,
-) {
+fun PreviewImageDetailItem(imageAspectRatio: Float) {
     val resId =
-        if (imageAspectRatio > 1) R.drawable.preview_portrait_images else R.drawable.preview_land_images
+        if (imageAspectRatio > 1) R.drawable.feature_photo_preview_portrait_images else R.drawable.feature_photo_preview_land_images
     val painter = coilImagePainter(resId, true)
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .aspectRatio(imageAspectRatio),
         contentAlignment = Alignment.Center,
@@ -350,9 +352,10 @@ fun PagingStateHandling(lazyPagingItems: LazyPagingItems<ImageDetail>) {
 
 @Composable
 fun NoDataMessage() {
-    val noDataFound = stringResource(R.string.no_data_found)
+    val noDataFound = stringResource(R.string.feature_photo_no_data_found)
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .semantics {
                 contentDescription = noDataFound
@@ -380,7 +383,7 @@ fun PageLoaderError(onClickRetry: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
     ) {
         OutlinedButton(onClick = onClickRetry) {
-            Text(text = stringResource(R.string.retry))
+            Text(text = stringResource(R.string.feature_photo_retry))
         }
     }
 }
@@ -396,19 +399,18 @@ fun PageLoader() {
 }
 
 @Composable
-fun ErrorMessage(
-    onClickRetry: () -> Unit,
-) {
+fun ErrorMessage(onClickRetry: () -> Unit) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = stringResource(R.string.error_message), color = MaterialTheme.colorScheme.error)
+        Text(text = stringResource(R.string.feature_photo_error_message), color = MaterialTheme.colorScheme.error)
         Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
         OutlinedButton(onClick = onClickRetry) {
-            Text(text = stringResource(R.string.retry))
+            Text(text = stringResource(R.string.feature_photo_retry))
         }
     }
 }
@@ -417,7 +419,8 @@ fun ErrorMessage(
 fun LoadingNextPageItem(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(SPACING_LARGE.dp),
     ) {

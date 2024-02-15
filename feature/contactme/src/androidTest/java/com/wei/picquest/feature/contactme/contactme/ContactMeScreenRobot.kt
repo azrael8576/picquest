@@ -38,14 +38,15 @@ internal fun contactMeScreenRobot(
 internal open class ContactMeScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
-    private val profilePictureDescription by composeTestRule.stringResource(R.string.profile_picture)
-    private val linkedinString by composeTestRule.stringResource(R.string.linkedin)
-    private val emailString by composeTestRule.stringResource(R.string.email)
-    private val timezoneString by composeTestRule.stringResource(R.string.timezone)
-    private val callDescription by composeTestRule.stringResource(R.string.call)
+    private val profilePictureDescription by composeTestRule.stringResource(R.string.feature_contactme_profile_picture)
+    private val linkedinString by composeTestRule.stringResource(R.string.feature_contactme_linkedin)
+    private val emailString by composeTestRule.stringResource(R.string.feature_contactme_email)
+    private val timezoneString by composeTestRule.stringResource(R.string.feature_contactme_timezone)
+    private val callDescription by composeTestRule.stringResource(R.string.feature_contactme_call)
 
     private val profilePicture by lazy {
         composeTestRule.onNodeWithContentDescription(
@@ -183,7 +184,6 @@ internal fun contactMeScreenCallRobot(
 internal open class ContactMeScreenCallRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-
     private var isCallClicked: Boolean = false
 
     fun setIsCallClicked(backClicked: Boolean) {
@@ -195,12 +195,13 @@ internal open class ContactMeScreenCallRobot(
     }
 }
 
-val testUiState = ContactMeViewState(
-    nameTw = NAME_TW,
-    nameEng = NAME_ENG,
-    position = POSITION,
-    phone = PHONE,
-    linkedinUrl = LINKEDIN_URL,
-    email = EMAIL,
-    timeZone = TIME_ZONE,
-)
+val testUiState =
+    ContactMeViewState(
+        nameTw = NAME_TW,
+        nameEng = NAME_ENG,
+        position = POSITION,
+        phone = PHONE,
+        linkedinUrl = LINKEDIN_URL,
+        email = EMAIL,
+        timeZone = TIME_ZONE,
+    )

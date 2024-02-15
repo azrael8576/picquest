@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="retry">Retry</string>
-    <string name="error_message">An error occurred, please try again later</string>
-    <string name="search">Search</string>
-    <string name="clear_search_text_content_desc">Clear search text</string>
-    <string name="recent_video_searches">Recent video searches</string>
-    <string name="clear_recent_searches_content_desc">Clear searches</string>
-    <string name="no_data_found">No Data Found</string>
+    <string name="feature_video_retry">Retry</string>
+    <string name="feature_video_error_message">An error occurred, please try again later</string>
+    <string name="feature_video_search">Search</string>
+    <string name="feature_video_clear_search_text_content_desc">Clear search text</string>
+    <string name="feature_video_recent_video_searches">Recent video searches</string>
+    <string name="feature_video_clear_recent_searches_content_desc">Clear searches</string>
+    <string name="feature_video_no_data_found">No Data Found</string>
 </resources>

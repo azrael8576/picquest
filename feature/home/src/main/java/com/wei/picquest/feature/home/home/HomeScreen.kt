@@ -58,9 +58,7 @@ import com.wei.picquest.feature.home.R
  *
  */
 @Composable
-internal fun HomeRoute(
-    navController: NavController,
-) {
+internal fun HomeRoute(navController: NavController) {
     HomeScreen()
 }
 
@@ -91,19 +89,21 @@ internal fun HomeScreen(
             }
             LazyColumn {
                 item {
-                    val importantNote = stringResource(id = R.string.important_note)
-                    val importantNoteMessage = stringResource(id = R.string.important_note_message)
+                    val importantNote = stringResource(id = R.string.feature_home_important_note)
+                    val importantNoteMessage = stringResource(id = R.string.feature_home_important_note_message)
                     Text(
                         text = importantNote,
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(SPACING_MEDIUM.dp)
                             .semantics { contentDescription = importantNote },
                     )
                     Text(
                         text = importantNoteMessage,
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(SPACING_MEDIUM.dp)
                             .semantics { contentDescription = importantNoteMessage },
                     )

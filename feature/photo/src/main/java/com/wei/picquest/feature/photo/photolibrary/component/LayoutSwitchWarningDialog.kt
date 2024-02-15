@@ -16,7 +16,7 @@ fun LayoutSwitchWarningDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         text = {
-            val warningText = stringResource(R.string.layout_switch_warning)
+            val warningText = stringResource(R.string.feature_photo_layout_switch_warning)
 
             Text(
                 text = warningText,
@@ -25,7 +25,7 @@ fun LayoutSwitchWarningDialog(onDismiss: () -> Unit) {
             )
         },
         confirmButton = {
-            val buttonText = stringResource(R.string.understand)
+            val buttonText = stringResource(R.string.feature_photo_understand)
 
             TextButton(onClick = onDismiss) {
                 Text(

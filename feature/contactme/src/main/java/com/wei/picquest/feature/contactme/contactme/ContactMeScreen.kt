@@ -124,7 +124,8 @@ internal fun ContactMeScreen(
     onPhoneClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize(),
     ) {
         if (contentType == PqContentType.DUAL_PANE) {
@@ -159,7 +160,8 @@ internal fun ContactMeScreen(
             }
         } else {
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center,
@@ -190,10 +192,11 @@ internal fun ContactMeTwoPaneFirstContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        val modifier = Modifier
-            .clip(CircleShape)
-            .size(200.dp)
-            .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape)
+        val modifier =
+            Modifier
+                .clip(CircleShape)
+                .size(200.dp)
+                .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape)
 
         DisplayHeadShot(
             modifier = modifier,
@@ -260,10 +263,11 @@ internal fun ContactMeSinglePaneContent(
             }
         }
         item {
-            val modifier = Modifier
-                .clip(CircleShape)
-                .size(150.dp)
-                .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
+            val modifier =
+                Modifier
+                    .clip(CircleShape)
+                    .size(150.dp)
+                    .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape)
 
             DisplayHeadShot(
                 modifier = modifier,
@@ -293,14 +297,15 @@ internal fun DisplayHeadShot(
     name: String,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.he_wei
+    val resId = R.drawable.feature_contactme_he_wei
     val painter = coilImagePainter(resId, isPreview)
 
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val profilePictureDescription = stringResource(R.string.feature_contactme_profile_picture).format(name)
     Image(
         painter = painter,
         contentDescription = profilePictureDescription,
-        modifier = modifier
+        modifier =
+        modifier
             .clip(CircleShape)
             .size(300.dp)
             .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
@@ -314,15 +319,18 @@ fun ContactMeCard(
     onPhoneClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier
+        modifier =
+        modifier
             .padding(horizontal = SPACING_EXTRA_LARGE.dp)
             .clip(CardDefaults.shape),
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(SPACING_LARGE.dp)
                 .fillMaxWidth(),
         ) {
@@ -340,17 +348,17 @@ fun ContactMeCard(
                 )
             }
             ProfileProperty(
-                label = stringResource(id = R.string.linkedin),
+                label = stringResource(id = R.string.feature_contactme_linkedin),
                 value = uiStates.linkedinUrl,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.email),
+                label = stringResource(id = R.string.feature_contactme_email),
                 value = uiStates.email,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.timezone),
+                label = stringResource(id = R.string.feature_contactme_timezone),
                 value = uiStates.timeZone,
                 isLink = false,
             )
@@ -371,7 +379,8 @@ private fun NameAndPosition(
         Text(
             text = name,
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .baselineHeight(32.dp)
                 .semantics { contentDescription = name },
         )
@@ -380,7 +389,8 @@ private fun NameAndPosition(
             text = position,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(bottom = 20.dp)
                 .baselineHeight(SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = position },
@@ -401,13 +411,14 @@ private fun PhoneButton(
         })
     }
 
-    val phoneDescription = stringResource(id = R.string.call).format(name)
+    val phoneDescription = stringResource(id = R.string.feature_contactme_call).format(name)
     IconButton(
         onClick = {
             showPopup.value = true
             onPhoneClick()
         },
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surface)
             .semantics { contentDescription = phoneDescription },
@@ -448,11 +459,12 @@ fun ContactMeScreenSinglePanePreview() {
     }
 }
 
-internal val previewUIState = ContactMeViewState(
-    nameEng = NAME_ENG,
-    position = POSITION,
-    phone = PHONE,
-    linkedinUrl = LINKEDIN_URL,
-    email = EMAIL,
-    timeZone = TIME_ZONE,
-)
+internal val previewUIState =
+    ContactMeViewState(
+        nameEng = NAME_ENG,
+        position = POSITION,
+        phone = PHONE,
+        linkedinUrl = LINKEDIN_URL,
+        email = EMAIL,
+        timeZone = TIME_ZONE,
+    )
