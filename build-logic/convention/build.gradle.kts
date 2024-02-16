@@ -20,8 +20,18 @@ tasks.withType<KotlinCompile>().configureEach {
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.android.tools.common)
+    compileOnly(libs.firebase.crashlytics.gradlePlugin)
+    compileOnly(libs.firebase.performance.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+}
+
+tasks {
+    validatePlugins {
+        failOnWarning.set(true)
+        enableStricterValidation.set(true)
+    }
 }
 
 gradlePlugin {
@@ -53,6 +63,10 @@ gradlePlugin {
         register("androidHilt") {
             id = "pq.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("androidFirebase") {
+            id = "pq.android.application.firebase"
+            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
         register("androidFlavors") {
             id = "pq.android.application.flavors"

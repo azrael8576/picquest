@@ -33,6 +33,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.wei.picquest.core.designsystem.component.ThemePreviews
 import com.wei.picquest.core.designsystem.theme.PqTheme
+import com.wei.picquest.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.picquest.core.model.data.VideoDetail
 import com.wei.picquest.core.model.data.VideoDetailSize
 import com.wei.picquest.core.model.data.VideoStreams
@@ -80,6 +81,7 @@ internal fun VideoLibraryRoute(
     navController: NavController,
     viewModel: VideoLibraryViewModel = hiltViewModel(),
 ) {
+    val videoSearchQuery = viewModel.videoSearchQuery
     val lazyPagingItems = viewModel.videosState.collectAsLazyPagingItems()
     val isInPiPMode = LocalContext.current.isInPictureInPictureMode
 
@@ -110,6 +112,7 @@ internal fun VideoLibraryRoute(
             exoPlayer = exoPlayer,
             isPlayerReady = isPlayerReady,
         )
+        TrackScreenViewEvent(screenName = "VideoLibrary, $videoSearchQuery")
     }
 }
 

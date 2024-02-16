@@ -25,7 +25,7 @@ class VideoLibraryViewModel @Inject constructor(
 
     private val videoLibraryArgs: VideoLibraryArgs = VideoLibraryArgs(savedStateHandle)
 
-    private val videoSearchQuery = videoLibraryArgs.videoSearchQuery
+    val videoSearchQuery = videoLibraryArgs.videoSearchQuery
 
     private val _videosState: MutableStateFlow<PagingData<VideoDetail>> =
         MutableStateFlow(value = PagingData.empty())

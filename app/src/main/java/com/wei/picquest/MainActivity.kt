@@ -21,6 +21,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.wei.picquest.core.analytics.AnalyticsHelper
+import com.wei.picquest.core.analytics.LocalAnalyticsHelper
 import com.wei.picquest.core.data.utils.NetworkMonitor
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.manager.SnackbarManager
@@ -39,6 +41,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -95,7 +100,7 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
-            CompositionLocalProvider {
+            CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
                 PqTheme(darkTheme = darkTheme) {
                     PqApp(
                         networkMonitor = networkMonitor,

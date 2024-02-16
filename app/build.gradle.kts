@@ -3,6 +3,7 @@ import com.wei.picquest.PqBuildType
 plugins {
     alias(libs.plugins.pq.android.application)
     alias(libs.plugins.pq.android.application.compose)
+    alias(libs.plugins.pq.android.application.firebase)
     alias(libs.plugins.pq.android.application.flavors)
     alias(libs.plugins.pq.android.hilt)
     alias(libs.plugins.roborazzi)
@@ -72,6 +73,7 @@ dependencies {
     implementation(projects.feature.photo)
     implementation(projects.feature.video)
 
+    implementation(projects.core.analytics)
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.datastore)
