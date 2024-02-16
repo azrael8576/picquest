@@ -61,6 +61,7 @@ import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
+import com.wei.picquest.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.picquest.core.model.data.ImageDetail
 import com.wei.picquest.feature.photo.R
 import com.wei.picquest.feature.photo.photolibrary.component.LayoutSwitchWarningDialog
@@ -101,14 +102,24 @@ internal fun PhotoLibraryRoute(
     navController: NavController,
     viewModel: PhotoLibraryViewModel = hiltViewModel(),
 ) {
+    val photoSearchQuery = viewModel.photoSearchQuery
     val lazyPagingItems = viewModel.imagesState.collectAsLazyPagingItems()
     val uiStates: PhotoLibraryViewState by viewModel.states.collectAsStateWithLifecycle()
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Box {
             when (uiStates.layoutType) {
-                LayoutType.LIST -> PhotoLibraryListScreen(lazyPagingItems = lazyPagingItems)
-                LayoutType.GRID -> PhotoLibraryGridScreen(lazyPagingItems = lazyPagingItems)
+                LayoutType.LIST ->
+                    PhotoLibraryListScreen(
+                        photoSearchQuery = photoSearchQuery,
+                        lazyPagingItems = lazyPagingItems,
+                    )
+
+                LayoutType.GRID ->
+                    PhotoLibraryGridScreen(
+                        photoSearchQuery = photoSearchQuery,
+                        lazyPagingItems = lazyPagingItems,
+                    )
             }
 
             TopBarActions(
@@ -195,6 +206,7 @@ fun SwitchLayoutButton(
 
 @Composable
 fun PhotoLibraryListScreen(
+    photoSearchQuery: String = "",
     lazyPagingItems: LazyPagingItems<ImageDetail>,
     isPreview: Boolean = false,
     withTopSpacer: Boolean = true,
@@ -221,10 +233,12 @@ fun PhotoLibraryListScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "PhotoLibraryList, $photoSearchQuery")
 }
 
 @Composable
 fun PhotoLibraryGridScreen(
+    photoSearchQuery: String = "",
     lazyPagingItems: LazyPagingItems<ImageDetail>,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
@@ -260,6 +274,7 @@ fun PhotoLibraryGridScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "PhotoLibraryGrid, $photoSearchQuery")
 }
 
 @Composable

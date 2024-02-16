@@ -55,6 +55,7 @@ import com.wei.picquest.core.designsystem.icon.PqIcons
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_LARGE
 import com.wei.picquest.core.designsystem.theme.SPACING_SMALL
+import com.wei.picquest.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.picquest.feature.video.R
 import com.wei.picquest.feature.video.videolibrary.navigation.navigateToVideoLibrary
 
@@ -163,6 +164,7 @@ internal fun VideoSearchScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "VideoSearch")
 }
 
 @Composable

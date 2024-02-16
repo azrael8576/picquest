@@ -26,6 +26,7 @@ import com.wei.picquest.core.designsystem.component.FunctionalityNotAvailablePop
 import com.wei.picquest.core.designsystem.component.ThemePreviews
 import com.wei.picquest.core.designsystem.theme.PqTheme
 import com.wei.picquest.core.designsystem.theme.SPACING_MEDIUM
+import com.wei.picquest.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.picquest.feature.home.R
 
 /**
@@ -114,6 +115,7 @@ internal fun HomeScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "Home")
 }
 
 @ThemePreviews

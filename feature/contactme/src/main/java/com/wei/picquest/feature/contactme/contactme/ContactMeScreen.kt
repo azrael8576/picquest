@@ -55,6 +55,7 @@ import com.wei.picquest.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.picquest.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.picquest.core.designsystem.ui.PqContentType
 import com.wei.picquest.core.designsystem.ui.PqNavigationType
+import com.wei.picquest.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.picquest.feature.contactme.R
 import com.wei.picquest.feature.contactme.contactme.ui.DecorativeBackgroundText
 import com.wei.picquest.feature.contactme.contactme.ui.ProfileProperty
@@ -181,6 +182,7 @@ internal fun ContactMeScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "ContactMe")
 }
 
 @Composable
