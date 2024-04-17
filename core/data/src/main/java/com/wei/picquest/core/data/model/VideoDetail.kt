@@ -13,7 +13,6 @@ fun NetworkVideoDetail.asExternalModel() = VideoDetail(
     type = this.type,
     tags = this.tags,
     duration = this.duration,
-    pictureId = this.pictureId,
     videos = this.videos.asExternalModel(),
     views = this.views,
     downloads = this.downloads,
@@ -36,4 +35,5 @@ fun NetworkVideoDetailSize.asExternalModel() = VideoDetailSize(
     width = this.width,
     height = this.height,
     size = this.size,
+    thumbnail = this.thumbnail,
 )

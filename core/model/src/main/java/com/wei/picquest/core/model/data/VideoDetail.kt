@@ -6,7 +6,6 @@ data class VideoDetail(
     val type: String,
     val tags: String,
     val duration: Int,
-    val pictureId: String,
     val videos: VideoStreams,
     val views: Int,
     val downloads: Int,
@@ -29,4 +28,5 @@ data class VideoDetailSize(
     val width: Int,
     val height: Int,
     val size: Long,
+    val thumbnail: String,
 )
