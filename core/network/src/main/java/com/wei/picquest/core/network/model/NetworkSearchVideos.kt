@@ -28,8 +28,6 @@ data class NetworkVideoDetail(
     val tags: String,
     @SerialName("duration")
     val duration: Int,
-    @SerialName("picture_id")
-    val pictureId: String,
     @SerialName("videos")
     val videos: NetworkVideoStreams,
     @SerialName("views")
@@ -70,4 +68,6 @@ data class NetworkVideoDetailSize(
     val height: Int,
     @SerialName("size")
     val size: Long,
+    @SerialName("thumbnail")
+    val thumbnail: String,
 )
