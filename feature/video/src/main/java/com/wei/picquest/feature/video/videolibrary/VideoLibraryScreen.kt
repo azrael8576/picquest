@@ -174,11 +174,13 @@ fun rememberExoPlayerInstance(
             videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
             repeatMode = Player.REPEAT_MODE_ONE
 
-            addListener(object : Player.Listener {
-                override fun onPlaybackStateChanged(state: Int) {
-                    isPlayerReady.value = (state == Player.STATE_READY)
-                }
-            })
+            addListener(
+                object : Player.Listener {
+                    override fun onPlaybackStateChanged(state: Int) {
+                        isPlayerReady.value = (state == Player.STATE_READY)
+                    }
+                },
+            )
         }
     }
 }
@@ -254,31 +256,34 @@ val fakeVideoDetails = listOf(
         type = "",
         tags = "",
         duration = 0,
-        pictureId = "",
         videos = VideoStreams(
             large = VideoDetailSize(
                 url = "",
                 width = 0,
                 height = 0,
                 size = 0,
+                thumbnail = "",
             ),
             medium = VideoDetailSize(
                 url = "",
                 width = 0,
                 height = 0,
                 size = 0,
+                thumbnail = "",
             ),
             small = VideoDetailSize(
                 url = "",
                 width = 0,
                 height = 0,
                 size = 0,
+                thumbnail = "",
             ),
             tiny = VideoDetailSize(
                 url = "",
                 width = 0,
                 height = 0,
                 size = 0,
+                thumbnail = "",
             ),
         ),
         views = 0,
